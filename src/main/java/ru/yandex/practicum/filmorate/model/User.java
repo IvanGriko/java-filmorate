@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class User {
 
     private Long id;
-    @Email(message = "Имейл не указан или указан без @")
+    @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Имейл не указан или указан без @")
     private String email;
     @NotBlank(message = "Логин не указан")
     @Pattern(regexp = "\\S+", message = "Логин содержит пробел")
