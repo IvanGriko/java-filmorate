@@ -17,7 +17,6 @@ import java.time.LocalDate;
 @Builder
 public class User {
 
-    @NonNull
     private Long id;
     @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Имейл не указан или указан без @")
     private String email;
