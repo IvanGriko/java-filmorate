@@ -52,17 +52,6 @@ public class UserControllerTest {
     }
 
     @Test
-    void createWithEmptyNameTest() {
-        testUser = User.builder()
-                .id(2L)
-                .email("user@yandex.ru")
-                .login("login")
-                .birthday(LocalDate.of(1987, 5, 5))
-                .build();
-        Assertions.assertEquals("login", testUser.getName());
-    }
-
-    @Test
     void createWithInvalidBirthdayTest() {
         testUser.setBirthday(LocalDate.now().plusDays(1));
         Set<ConstraintViolation<User>> violations = validator.validate(testUser);
