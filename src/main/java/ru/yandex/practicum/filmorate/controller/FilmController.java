@@ -19,7 +19,7 @@ public class FilmController {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private static final LocalDate FIRST_FILM_DATE = LocalDate.of(1895, 12, 28);
     private final Map<Long, Film> films = new HashMap<>();
-    private Long lastFilmId = 1L;
+    private Long lastFilmId = 0L;
 
     @GetMapping
     public Collection<Film> getFilms() {

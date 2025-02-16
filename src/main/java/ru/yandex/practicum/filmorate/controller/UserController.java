@@ -17,7 +17,7 @@ import java.util.Map;
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final Map<Long, User> users = new HashMap<>();
-    private Long lastUserId = 1L;
+    private Long lastUserId = 0L;
 
     @GetMapping
     public Collection<User> getUsers() {
