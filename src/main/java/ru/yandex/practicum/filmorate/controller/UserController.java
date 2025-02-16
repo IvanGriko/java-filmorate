@@ -17,6 +17,7 @@ import java.util.Map;
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final Map<Long, User> users = new HashMap<>();
+    private Long lastUserId = 1L;
 
     @GetMapping
     public Collection<User> getUsers() {
@@ -30,18 +31,10 @@ public class UserController {
             user.setName(user.getLogin());
         }
         log.debug("User {} is posted", user.getName());
-        user.setId(generateUserId());
+        ++lastUserId;
+        user.setId(lastUserId);
         users.put(user.getId(), user);
         return user;
-    }
-
-    private long generateUserId() {
-        long maxId = users.keySet()
-                .stream()
-                .mapToLong(id -> id)
-                .max()
-                .orElse(0);
-        return ++maxId;
     }
 
     @PutMapping

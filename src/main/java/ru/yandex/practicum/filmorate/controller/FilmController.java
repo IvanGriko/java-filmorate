@@ -19,7 +19,7 @@ public class FilmController {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private static final LocalDate FIRST_FILM_DATE = LocalDate.of(1895, 12, 28);
     private final Map<Long, Film> films = new HashMap<>();
-    private Long lastId;
+    private Long lastFilmId = 1L;
 
     @GetMapping
     public Collection<Film> getFilms() {
@@ -29,8 +29,8 @@ public class FilmController {
     @PostMapping
     public Film createFilm(@Valid @RequestBody Film film) {
         log.debug("Starting post {}", film);
-        ++lastId;
-        film.setId(lastId);
+        ++lastFilmId;
+        film.setId(lastFilmId);
         films.put(film.getId(), film);
         log.debug("Film {} was posted", film.getName());
         return film;
