@@ -2,12 +2,12 @@ package ru.yandex.practicum.filmorate.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
-import ru.yandex.practicum.filmorate.annotation.AfterDate;
 
 import java.time.LocalDate;
 
@@ -24,6 +24,6 @@ public class User {
     @Pattern(regexp = "\\S+", message = "Логин содержит пробел")
     private String login;
     private String name;
-    @AfterDate(message = "Дата рождения указана неверно")
+    @Past
     private LocalDate birthday;
 }

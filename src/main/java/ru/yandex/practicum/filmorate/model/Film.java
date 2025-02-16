@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
-import ru.yandex.practicum.filmorate.annotation.BeforeDate;
+import ru.yandex.practicum.filmorate.annotation.AfterDate;
 
 import java.time.LocalDate;
 
@@ -20,7 +20,7 @@ public class Film {
     private String name;
     @Size(max = 200, message = "Максимальная длинна описания - 200 символов")
     private String description;
-    @BeforeDate(message = "Дата релиза — не раньше 28 декабря 1895 года")
+    @AfterDate(message = "Дата релиза — не раньше 28 декабря 1895 года")
     private LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма не может быть меньше 0")
     private Integer duration;

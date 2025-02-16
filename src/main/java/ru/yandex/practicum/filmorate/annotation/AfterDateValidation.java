@@ -5,15 +5,15 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 
 public class AfterDateValidation implements ConstraintValidator<AfterDate, LocalDate> {
-    private LocalDate nowDate;
+    private LocalDate minimumDate;
 
     @Override
     public void initialize(AfterDate constraintAnnotation) {
-        nowDate = LocalDate.now();
+        minimumDate = LocalDate.parse(constraintAnnotation.value());
     }
 
     @Override
     public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
-        return value == null || !value.isAfter(nowDate);
+        return value == null || !value.isBefore(minimumDate);
     }
 }
