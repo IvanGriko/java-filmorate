@@ -40,19 +40,19 @@ public class UserController {
     @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
         log.debug("Starting update {}", user);
-        if (users.containsKey(user.getId())) {
-            User updatedUser = User.builder()
-                    .id(user.getId())
-                    .login(user.getLogin())
-                    .email(user.getEmail())
-                    .birthday(user.getBirthday())
-                    .name(user.getName())
-                    .build();
-            users.replace(user.getId(), updatedUser);
-            log.debug("User {} is updated", updatedUser.getName());
-            return updatedUser;
+        if (!users.containsKey(user.getId())) {
+            log.error("User with ID {} is not found", user.getId());
+            throw new ValidationException("Пользователь с ID " + user.getId() + " не найден");
         }
-        log.error("User with ID {} is not found", user.getId());
-        throw new ValidationException("Пользователь с ID " + user.getId() + " не найден");
+        User updatedUser = User.builder()
+                .id(user.getId())
+                .login(user.getLogin())
+                .email(user.getEmail())
+                .birthday(user.getBirthday())
+                .name(user.getName())
+                .build();
+        users.replace(user.getId(), updatedUser);
+        log.debug("User {} is updated", updatedUser.getName());
+        return updatedUser;
     }
 }
