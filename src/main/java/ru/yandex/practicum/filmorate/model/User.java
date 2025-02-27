@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -28,4 +29,30 @@ public class User {
     @Past
     private LocalDate birthday;
     private Set<User> friends;
+
+    public User () {}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && email.equals(user.email) && login.equals(user.login) && Objects.equals(name, user.name) && birthday.equals(user.birthday);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, login, name, birthday);
+    }
 }
