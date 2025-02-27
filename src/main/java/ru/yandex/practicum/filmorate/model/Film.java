@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import ru.yandex.practicum.filmorate.annotation.AfterDate;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +25,5 @@ public class Film {
     private LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма не может быть меньше 0")
     private Integer duration;
+    private Set<Long> likes;
 }

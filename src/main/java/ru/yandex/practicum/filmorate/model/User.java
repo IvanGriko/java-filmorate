@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,4 +27,5 @@ public class User {
     private String name;
     @Past
     private LocalDate birthday;
+    private Set<User> friends;
 }
