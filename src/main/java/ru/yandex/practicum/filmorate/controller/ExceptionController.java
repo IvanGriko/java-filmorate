@@ -14,8 +14,7 @@ import java.util.Map;
 
 @RestController
 public class ExceptionController { @ExceptionHandler({ValidationFilmException.class, ValidationFilmException.class})
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+                                   @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> validationFilmExceptionHandler(Exception e) {
         return Map.of("Error: ", e.getMessage());
     }
