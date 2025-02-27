@@ -13,12 +13,12 @@ import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
 import java.util.Map;
 
 @RestController
-public class ExceptionController {@ExceptionHandler({ValidationFilmException.class, ValidationFilmException.class})
+public class ExceptionController { @ExceptionHandler({ValidationFilmException.class, ValidationFilmException.class})
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public Map<String, String> validationFilmExceptionHandler(Exception e) {
-    return Map.of("Error: ", e.getMessage());
-}
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> validationFilmExceptionHandler(Exception e) {
+        return Map.of("Error: ", e.getMessage());
+    }
 
     @ExceptionHandler({NoSuchUserException.class, NoSuchFilmException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -37,7 +37,7 @@ public Map<String, String> validationFilmExceptionHandler(Exception e) {
     public Map<String, String> someExceptionHandler(Exception e) {
         System.out.println(e.getClass());
         System.out.println(e.getMessage());
-        for(StackTraceElement i : e.getStackTrace()) System.out.println(i);
+        for (StackTraceElement i : e.getStackTrace()) System.out.println(i);
         return Map.of("Error: ", e.getMessage());
     }
 }
