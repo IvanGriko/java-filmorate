@@ -9,12 +9,14 @@ import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.NoSuchFilmException;
 import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.FilmsByLikesComparator;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
@@ -104,4 +106,16 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Like is removed from film {}",  film.getName());
         return film.getLikes();
     }
+
+    @Override
+    public Set<Film> getPopularFilms(Integer count) {
+        log.debug("Starting get {} popular films", count);
+        if (count == null || count < 1) count = 10;
+        return getFilms().stream()
+                .sorted(new FilmsByLikesComparator())
+                .limit(count)
+                .collect(Collectors.toSet());
+    }
+
+
 }

@@ -12,7 +12,11 @@ import java.util.Set;
 @RequestMapping("/films")
 public class FilmController {
 
-    private FilmService filmService;
+    private final FilmService filmService;
+
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
+    }
 
     @GetMapping
     public Collection<Film> getFilms() {
@@ -47,5 +51,10 @@ public class FilmController {
     @DeleteMapping("/{filmId}/like/{userId}")
     public Set<Long> removeLike(@PathVariable Long filmId, @PathVariable Long userId) {
         return filmService.removeLike(filmId, userId);
+    }
+
+    @GetMapping("/popular?count={count}")
+    public Set<Film> getPopularFilms(@RequestParam(required = false) Integer count) {
+        return filmService.getPopularFilms(count);
     }
 }
