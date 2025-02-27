@@ -30,9 +30,6 @@ public class User {
     private LocalDate birthday;
     private Set<User> friends;
 
-    public User() {
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
