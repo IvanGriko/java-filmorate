@@ -25,12 +25,6 @@ public class ExceptionController { @ExceptionHandler({ValidationFilmException.cl
         return Map.of("Error: ", e.getMessage());
     }
 
-    @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentNotValidException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> deserializationAndValidationExceptionHandler(Exception e) {
-        return Map.of("Error: ", "Неправильно введены данные");
-    }
-
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> someExceptionHandler(Exception e) {
