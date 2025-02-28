@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.controller.UserController;
-import ru.yandex.practicum.filmorate.exception.NoSuchUserException;
-import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
@@ -44,7 +43,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting get user by ID {}", userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
-            throw new NoSuchUserException("User with ID " + userId + "not found");
+            throw new NotFoundException("User with ID " + userId + "not found");
         }
         return users.get(userId);
     }
@@ -54,7 +53,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting update {}", user);
         if (!users.containsKey(user.getId())) {
             log.error("User with ID {} is not found", user.getId());
-            throw new ValidationFilmException("Пользователь с ID " + user.getId() + " не найден");
+            throw new NotFoundException("Пользователь с ID " + user.getId() + " не найден");
         }
         User updatedUser = User.builder()
                 .id(user.getId())
@@ -73,11 +72,11 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting add friend ID {} to user ID {}", friendId, userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
-            throw new NoSuchUserException("User with ID " + userId + "not found");
+            throw new NotFoundException("User with ID " + userId + "not found");
         }
         if (!users.containsKey(friendId)) {
             log.error("User with ID {} is not found", friendId);
-            throw new NoSuchUserException("User with ID " + friendId + "not found");
+            throw new NotFoundException("User with ID " + friendId + "not found");
         }
         User user = users.get(userId);
         User newFriend = users.get(friendId);
@@ -93,7 +92,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting get friends set of user with ID {}", userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
-            throw new NoSuchUserException("User with ID " + userId + "not found");
+            throw new NotFoundException("User with ID " + userId + "not found");
         }
         return users.get(userId).getFriends();
     }
@@ -103,11 +102,11 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting remove friend ID {} from user ID {}", friendId, userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
-            throw new NoSuchUserException("User with ID " + userId + "not found");
+            throw new NotFoundException("User with ID " + userId + "not found");
         }
         if (!users.containsKey(friendId)) {
             log.error("User with ID {} is not found", friendId);
-            throw new NoSuchUserException("User with ID " + friendId + "not found");
+            throw new NotFoundException("User with ID " + friendId + "not found");
         }
         User user = users.get(userId);
         User friend = users.get(friendId);
@@ -124,7 +123,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting remove all friends of user with ID {}", userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
-            throw new NoSuchUserException("User with ID " + userId + "not found");
+            throw new NotFoundException("User with ID " + userId + "not found");
         }
         User user = users.get(userId);
         user.getFriends().clear();
@@ -138,11 +137,11 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("Starting get common friends of users with ID {} and ID {}", user1Id, user2Id);
         if (!users.containsKey(user1Id)) {
             log.error("User with ID {} is not found", user1Id);
-            throw new NoSuchUserException("User with ID " + user1Id + "not found");
+            throw new NotFoundException("User with ID " + user1Id + "not found");
         }
         if (!users.containsKey(user2Id)) {
             log.error("User with ID {} is not found", user2Id);
-            throw new NoSuchUserException("User with ID " + user2Id + "not found");
+            throw new NotFoundException("User with ID " + user2Id + "not found");
         }
         Set<User> friends1 = getFriends(user1Id);
         Set<User> friends2 = getFriends(user2Id);

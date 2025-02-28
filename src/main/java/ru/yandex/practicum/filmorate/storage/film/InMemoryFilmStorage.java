@@ -6,8 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.filmorate.controller.FilmController;
-import ru.yandex.practicum.filmorate.exception.NoSuchFilmException;
-import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.FilmsByLikesComparator;
 
@@ -47,7 +46,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Starting get film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
-            throw new NoSuchFilmException("Film with ID " + filmId + " is not found");
+            throw new NotFoundException("Film with ID " + filmId + " is not found");
         }
         return films.get(filmId);
     }
@@ -57,7 +56,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Starting update {}", film);
         if (!films.containsKey(film.getId())) {
             log.error("Film with ID {} is not found", film.getId());
-            throw new ValidationFilmException("Фильм с ID " + film.getId() + " не найден");
+            throw new NotFoundException("Фильм с ID " + film.getId() + " не найден");
         }
         Film updatedFilm = Film.builder()
                 .id(film.getId())
@@ -76,7 +75,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Starting get likes of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
-            throw new NoSuchFilmException("Film with ID " + filmId + " is not found");
+            throw new NotFoundException("Film with ID " + filmId + " is not found");
         }
         return films.get(filmId).getLikes();
     }
@@ -85,7 +84,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Starting add like to film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
-            throw new NoSuchFilmException("Film with ID " + filmId + " is not found");
+            throw new NotFoundException("Film with ID " + filmId + " is not found");
         }
         Film film = films.get(filmId);
         film.getLikes().add(userId);
@@ -98,7 +97,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Starting remove like of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
-            throw new NoSuchFilmException("Film with ID " + filmId + " is not found");
+            throw new NotFoundException("Film with ID " + filmId + " is not found");
         }
         Film film = films.get(filmId);
         film.getLikes().remove(userId);
