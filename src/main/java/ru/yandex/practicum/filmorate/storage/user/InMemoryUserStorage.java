@@ -67,7 +67,7 @@ public class InMemoryUserStorage implements UserStorage {
             log.debug("User {} is updated", updatedUser.getName());
             return users.get(user.getId());
         }
-        log.error("User with ID {} is not found", user.getId());
+//        log.error("User with ID {} is not found", user.getId());
         throw new NotFoundException("Пользователь с ID " + user.getId() + " не найден");
     }
 
