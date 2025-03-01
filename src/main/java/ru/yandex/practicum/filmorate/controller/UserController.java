@@ -43,7 +43,7 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @PatchMapping("/{id}/friends/{friendId}")
+    @PutMapping("/{id}/friends/{friendId}")
     public User addFriend(@PathVariable long id, @PathVariable long friendId) {
         return userService.addFriend(id, friendId);
     }
