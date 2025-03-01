@@ -22,7 +22,7 @@ public class ExceptionController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(final ValidationException e) {
-        log.error(HttpStatus.BAD_REQUEST + " - " + e.getMessage());
+        log.error("{} - {}", HttpStatus.BAD_REQUEST, e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
@@ -34,31 +34,29 @@ public class ExceptionController {
         String defaultMessage = allErrors.stream()
                 .map(error -> Objects.requireNonNull(error.getDefaultMessage()))
                 .collect(Collectors.joining(", "));
-        log.error(HttpStatus.BAD_REQUEST + " - " + defaultMessage);
+        log.error("{} - {}", HttpStatus.BAD_REQUEST, defaultMessage);
         return new ErrorResponse(defaultMessage);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(final NotFoundException e) {
-        log.error(HttpStatus.NOT_FOUND + " - " + e.getMessage());
+        log.error("{} - {}", HttpStatus.NOT_FOUND, e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleRunTimeException(final RuntimeException e) {
-        log.error(HttpStatus.INTERNAL_SERVER_ERROR + " - " + e.getMessage());
+        log.error("{} - {}", HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
     @Getter
-    private static class ErrorResponse {
+    public static class ErrorResponse {
         private final String error;
-
         public ErrorResponse(String error) {
             this.error = error;
         }
-
     }
 }
