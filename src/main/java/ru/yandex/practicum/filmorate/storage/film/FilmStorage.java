@@ -17,7 +17,7 @@ public interface FilmStorage {
 
     Set<Long> getLikes(Long filmId);
 
-    Set<Long> addLike(Long filmId, Long userId);
+    Film addLike(Long filmId, Long userId);
 
     Set<Long> removeLike(Long filmId, Long userId);
 

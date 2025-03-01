@@ -80,17 +80,15 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId).getLikes();
     }
 
-    public Set<Long> addLike(Long filmId, Long userId) {
+    public Film addLike(Long filmId, Long userId) {
         log.debug("Starting add like to film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
             throw new NotFoundException("Film with ID " + filmId + " is not found");
         }
-        Film film = films.get(filmId);
-        film.getLikes().add(userId);
-        films.replace(filmId, film);
-        log.debug("Like is added to film {}",  film.getName());
-        return film.getLikes();
+        films.get(filmId).getLikes().add(userId);
+        log.debug("Like is added to film {}",  films.get(filmId).getName());
+        return films.get(filmId);
     }
 
     public Set<Long> removeLike(Long filmId, Long userId) {

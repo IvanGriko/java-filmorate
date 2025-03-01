@@ -36,7 +36,7 @@ public class FilmService {
         return filmStorage.getLikes(filmId);
     }
 
-    public Set<Long> addLike(Long filmId, Long userId) {
+    public Film addLike(Long filmId, Long userId) {
         return filmStorage.addLike(filmId, userId);
     }
 
