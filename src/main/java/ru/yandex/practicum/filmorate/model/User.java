@@ -10,6 +10,8 @@ import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -27,5 +29,9 @@ public class User {
     private String name;
     @Past
     private LocalDate birthday;
-    private Set<User> friends;
+    private Set<Long> friends;
+
+    public void addFriend(long friendId) {
+        friends.add(friendId);
+    }
 }
