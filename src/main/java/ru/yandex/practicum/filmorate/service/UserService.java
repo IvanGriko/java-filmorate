@@ -34,7 +34,7 @@ public class UserService {
         return userStorage.updateUser(user);
     }
 
-    public Set<User> addFriend(long userId, long friendId) {
+    public User addFriend(long userId, long friendId) {
         return userStorage.addFriend(userId, friendId);
     }
 
@@ -42,11 +42,11 @@ public class UserService {
         return userStorage.getFriends(userId);
     }
 
-    public Set<User> removeFriend(long userId, long friendId) {
+    public User removeFriend(long userId, long friendId) {
         return userStorage.removeFriend(userId, friendId);
     }
 
-    public Set<User> removeAllFriends(long userId) {
+    public User removeAllFriends(long userId) {
         return userStorage.removeAllFriends(userId);
     }
 

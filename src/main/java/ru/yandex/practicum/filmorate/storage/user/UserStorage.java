@@ -15,13 +15,13 @@ public interface UserStorage {
 
     User updateUser(User user);
 
-    Set<User> addFriend(long userId, long friendId);
+    User addFriend(long userId, long friendId);
 
     Set<User> getFriends(long userId);
 
-    Set<User> removeFriend(long userId, long friendId);
+    User removeFriend(long userId, long friendId);
 
-    Set<User> removeAllFriends(long userId);
+    User removeAllFriends(long userId);
 
     Set<User> getCommonFriends(long user1Id, long user2Id);
 }

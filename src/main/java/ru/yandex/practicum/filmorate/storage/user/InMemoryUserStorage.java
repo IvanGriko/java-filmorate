@@ -64,11 +64,11 @@ public class InMemoryUserStorage implements UserStorage {
                 .build();
         users.replace(user.getId(), updatedUser);
         log.debug("User {} is updated", updatedUser.getName());
-        return updatedUser;
+        return users.get(user.getId());
     }
 
     @Override
-    public Set<User> addFriend(long userId, long friendId) {
+    public User addFriend(long userId, long friendId) {
         log.debug("Starting add friend ID {} to user ID {}", friendId, userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
@@ -84,7 +84,7 @@ public class InMemoryUserStorage implements UserStorage {
         newFriend.getFriends().add(user);
         users.replace(userId, user);
         log.debug("Friend ID {} is added to user ID {}", friendId, userId);
-        return user.getFriends();
+        return users.get(userId);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public Set<User> removeFriend(long userId, long friendId) {
+    public User removeFriend(long userId, long friendId) {
         log.debug("Starting remove friend ID {} from user ID {}", friendId, userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
@@ -115,11 +115,11 @@ public class InMemoryUserStorage implements UserStorage {
         users.replace(userId, user);
         users.replace(friendId, friend);
         log.debug("Friend ID {} is removed from user ID {}", friendId, userId);
-        return user.getFriends();
+        return users.get(userId);
     }
 
     @Override
-    public Set<User> removeAllFriends(long userId) {
+    public User removeAllFriends(long userId) {
         log.debug("Starting remove all friends of user with ID {}", userId);
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
@@ -129,7 +129,7 @@ public class InMemoryUserStorage implements UserStorage {
         user.getFriends().clear();
         users.replace(userId, user);
         log.debug("All friends of user with ID {} is removed", userId);
-        return user.getFriends();
+        return users.get(userId);
     }
 
     @Override

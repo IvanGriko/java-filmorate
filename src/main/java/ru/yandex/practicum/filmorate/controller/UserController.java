@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import ru.yandex.practicum.filmorate.model.User;
@@ -26,6 +27,7 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
         return userService.createUser(user);
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/friends/{friendId}")
-    public Set<User> addFriend(@PathVariable long id, @PathVariable long friendId) {
+    public User addFriend(@PathVariable long id, @PathVariable long friendId) {
         return userService.addFriend(id, friendId);
     }
 
@@ -52,12 +54,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
-    public Set<User> removeFriend(@PathVariable long id, @PathVariable long friendId) {
+    public User removeFriend(@PathVariable long id, @PathVariable long friendId) {
         return userService.removeFriend(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends")
-    public Set<User> removeAllFriends(@PathVariable long id) {
+    public User removeAllFriends(@PathVariable long id) {
         return userService.removeAllFriends(id);
     }
 
