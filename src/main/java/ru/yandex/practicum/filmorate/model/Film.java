@@ -16,7 +16,7 @@ import java.util.Set;
 @Validated
 public class Film {
 
-    private Long id;
+    private long id;
     @NotBlank(message = "Название не может быть пустым")
     private String name;
     @Size(max = 200, message = "Максимальная длинна описания - 200 символов")

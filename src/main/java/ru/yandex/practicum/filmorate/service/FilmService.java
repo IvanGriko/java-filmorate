@@ -32,15 +32,15 @@ public class FilmService {
         return filmStorage.updateFilm(film);
     }
 
-    public Set<Long> getLikes(Long filmId) {
+    public Set<Long> getLikes(long filmId) {
         return filmStorage.getLikes(filmId);
     }
 
-    public Film addLike(Long filmId, Long userId) {
+    public Film addLike(long filmId, long userId) {
         return filmStorage.addLike(filmId, userId);
     }
 
-    public Set<Long> removeLike(Long filmId, Long userId) {
+    public Film removeLike(long filmId, long userId) {
         return filmStorage.removeLike(filmId, userId);
     }
 

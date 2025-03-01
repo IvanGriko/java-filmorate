@@ -23,7 +23,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private static final LocalDate FIRST_FILM_DATE = LocalDate.of(1895, 12, 28);
     private final Map<Long, Film> films = new HashMap<>();
-    private Long lastFilmId = 0L;
+    private long lastFilmId = 0L;
 
     @Override
     public Collection<Film> getFilms() {
@@ -71,7 +71,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return updatedFilm;
     }
 
-    public Set<Long> getLikes(Long filmId) {
+    public Set<Long> getLikes(long filmId) {
         log.debug("Starting get likes of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
@@ -80,7 +80,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId).getLikes();
     }
 
-    public Film addLike(Long filmId, Long userId) {
+    public Film addLike(long filmId, long userId) {
         log.debug("Starting add like to film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
@@ -91,17 +91,15 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId);
     }
 
-    public Set<Long> removeLike(Long filmId, Long userId) {
+    public Film removeLike(long filmId, long userId) {
         log.debug("Starting remove like of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
             throw new NotFoundException("Film with ID " + filmId + " is not found");
         }
-        Film film = films.get(filmId);
-        film.getLikes().remove(userId);
-        films.replace(filmId, film);
-        log.debug("Like is removed from film {}",  film.getName());
-        return film.getLikes();
+        films.get(filmId).getLikes().remove(userId);
+        log.debug("Like is removed from film {}",  films.get(filmId).getName());
+        return films.get(filmId);
     }
 
     @Override
@@ -113,6 +111,4 @@ public class InMemoryFilmStorage implements FilmStorage {
                 .limit(count)
                 .collect(Collectors.toSet());
     }
-
-
 }

@@ -15,11 +15,11 @@ public interface FilmStorage {
 
     Film updateFilm(Film film);
 
-    Set<Long> getLikes(Long filmId);
+    Set<Long> getLikes(long filmId);
 
-    Film addLike(Long filmId, Long userId);
+    Film addLike(long filmId, long userId);
 
-    Set<Long> removeLike(Long filmId, Long userId);
+    Film removeLike(long filmId, long userId);
 
     Set<Film> getPopularFilms(Integer count);
 }
