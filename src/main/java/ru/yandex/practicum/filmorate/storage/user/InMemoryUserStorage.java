@@ -3,8 +3,10 @@ package ru.yandex.practicum.filmorate.storage.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.ErrorResponse;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
+import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
@@ -51,20 +53,20 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User updateUser(User user) {
         log.debug("Starting update {}", user);
-        if (!users.containsKey(user.getId())) {
-            log.error("User with ID {} is not found", user.getId());
-            throw new NotFoundException("Пользователь с ID " + user.getId() + " не найден");
+        if (users.containsKey(user.getId())) {
+            User updatedUser = User.builder()
+                    .id(user.getId())
+                    .login(user.getLogin())
+                    .email(user.getEmail())
+                    .birthday(user.getBirthday())
+                    .name(user.getName())
+                    .build();
+            users.replace(user.getId(), updatedUser);
+            log.debug("User {} is updated", updatedUser.getName());
+            return users.get(user.getId());
         }
-        User updatedUser = User.builder()
-                .id(user.getId())
-                .login(user.getLogin())
-                .email(user.getEmail())
-                .birthday(user.getBirthday())
-                .name(user.getName())
-                .build();
-        users.replace(user.getId(), updatedUser);
-        log.debug("User {} is updated", updatedUser.getName());
-        return users.get(user.getId());
+        log.error("User with ID {} is not found", user.getId());
+        throw new NotFoundException("Пользователь с ID " + user.getId() + " не найден");
     }
 
     @Override
