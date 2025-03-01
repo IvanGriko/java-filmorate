@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
@@ -31,27 +32,27 @@ public class FilmController {
     }
 
     @GetMapping ("/{filmId}")
-    public Film getFilm(@PathVariable long filmId) {
+    public Film getFilm(@PathVariable long filmId) throws NotFoundException {
         return filmService.getFilm(filmId);
     }
 
     @PutMapping
-    public Film updateFilm(@Valid @RequestBody Film film) {
+    public Film updateFilm(@Valid @RequestBody Film film) throws NotFoundException {
         return filmService.updateFilm(film);
     }
 
     @GetMapping("/{filmId}/likes")
-    public Set<Long> getLikes(@PathVariable long filmId) {
+    public Set<Long> getLikes(@PathVariable long filmId) throws NotFoundException {
         return filmService.getLikes(filmId);
     }
 
     @PutMapping("/{filmId}/like/{userId}")
-    public Film addLike(@PathVariable long filmId, @PathVariable long userId) {
+    public Film addLike(@PathVariable long filmId, @PathVariable long userId) throws NotFoundException {
         return filmService.addLike(filmId, userId);
     }
 
     @DeleteMapping("/{filmId}/like/{userId}")
-    public Film removeLike(@PathVariable long filmId, @PathVariable long userId) {
+    public Film removeLike(@PathVariable long filmId, @PathVariable long userId) throws NotFoundException {
         return filmService.removeLike(filmId, userId);
     }
 

@@ -42,7 +42,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film getFilm(long filmId) {
+    public Film getFilm(long filmId) throws NotFoundException {
         log.debug("Starting get film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
@@ -52,7 +52,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film updateFilm(@Valid @RequestBody Film film) {
+    public Film updateFilm(@Valid @RequestBody Film film) throws NotFoundException {
         log.debug("Starting update {}", film);
         if (!films.containsKey(film.getId())) {
             log.error("Film with ID {} is not found", film.getId());
@@ -71,7 +71,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return updatedFilm;
     }
 
-    public Set<Long> getLikes(long filmId) {
+    public Set<Long> getLikes(long filmId) throws NotFoundException {
         log.debug("Starting get likes of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
@@ -80,7 +80,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId).getLikes();
     }
 
-    public Film addLike(long filmId, long userId) {
+    public Film addLike(long filmId, long userId) throws NotFoundException {
         log.debug("Starting add like to film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
@@ -91,7 +91,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId);
     }
 
-    public Film removeLike(long filmId, long userId) {
+    public Film removeLike(long filmId, long userId) throws NotFoundException {
         log.debug("Starting remove like of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);

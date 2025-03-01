@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.user;
 
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private Long lastUserId = 0L;
 
+    @SneakyThrows
     @Override
     public Collection<User> getUsers() {
         if (!users.isEmpty()) {
@@ -42,6 +44,7 @@ public class InMemoryUserStorage implements UserStorage {
         return user;
     }
 
+    @SneakyThrows
     @Override
     public User getUser(long userId) {
         if (users.containsKey(userId)) {
@@ -52,6 +55,7 @@ public class InMemoryUserStorage implements UserStorage {
         throw new NotFoundException("User with ID " + userId + "not found");
     }
 
+    @SneakyThrows
     @Override
     public User updateUser(User user) {
         if (users.containsKey(user.getId())) {
@@ -67,10 +71,11 @@ public class InMemoryUserStorage implements UserStorage {
             log.debug("User {} is updated", updatedUser.getName());
             return users.get(user.getId());
         }
-//        log.error("User with ID {} is not found", user.getId());
+        log.error("User with ID {} is not found", user.getId());
         throw new NotFoundException("Пользователь с ID " + user.getId() + " не найден");
     }
 
+    @SneakyThrows
     @Override
     public User addFriend(long userId, long friendId) {
 
@@ -92,6 +97,7 @@ public class InMemoryUserStorage implements UserStorage {
         return users.get(userId);
     }
 
+    @SneakyThrows
     @Override
     public Set<User> getFriends(long userId) {
         if (users.containsKey(userId)) {
@@ -102,6 +108,7 @@ public class InMemoryUserStorage implements UserStorage {
         throw new NotFoundException("User with ID " + userId + "not found");
     }
 
+    @SneakyThrows
     @Override
     public User removeFriend(long userId, long friendId) {
         if (!users.containsKey(userId)) {
@@ -123,6 +130,7 @@ public class InMemoryUserStorage implements UserStorage {
         return users.get(userId);
     }
 
+    @SneakyThrows
     @Override
     public User removeAllFriends(long userId) {
         if (!users.containsKey(userId)) {
@@ -137,6 +145,7 @@ public class InMemoryUserStorage implements UserStorage {
         throw new NotFoundException("User with ID " + userId + "not found");
     }
 
+    @SneakyThrows
     @Override
     public Set<User> getCommonFriends(long user1Id, long user2Id) {
         if (!users.containsKey(user1Id)) {
