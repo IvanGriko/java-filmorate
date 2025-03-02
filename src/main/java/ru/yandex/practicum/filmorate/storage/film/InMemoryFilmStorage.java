@@ -12,10 +12,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.FilmsByLikesComparator;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -38,6 +35,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Starting post {}", film);
         ++lastFilmId;
         film.setId(lastFilmId);
+        film.setLikes(new HashSet<>());
         films.put(film.getId(), film);
         log.debug("Film {} was posted", film.getName());
         return film;
