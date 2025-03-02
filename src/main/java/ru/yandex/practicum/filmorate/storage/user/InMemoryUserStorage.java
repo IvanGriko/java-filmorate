@@ -51,7 +51,7 @@ public class InMemoryUserStorage implements UserStorage {
             log.debug("Starting get user by ID {}", userId);
             return users.get(userId);
         }
-//        log.error("User with ID {} is not found", userId);
+        log.error("User with ID {} is not found", userId);
         throw new NotFoundException("User with ID " + userId + "not found");
     }
 
@@ -66,7 +66,7 @@ public class InMemoryUserStorage implements UserStorage {
                     .email(user.getEmail())
                     .birthday(user.getBirthday())
                     .name(user.getName())
-                    .friends(user.getFriends())
+//                    .friends(user.getFriends())
                     .build();
             users.replace(user.getId(), updatedUser);
             log.debug("User {} is updated", updatedUser.getName());
