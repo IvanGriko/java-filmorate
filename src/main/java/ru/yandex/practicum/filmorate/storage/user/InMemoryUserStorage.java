@@ -39,6 +39,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("User {} is created", user.getName());
         ++lastUserId;
         user.setId(lastUserId);
+        user.setFriends(new HashSet<>());
         users.put(user.getId(), user);
         return user;
     }

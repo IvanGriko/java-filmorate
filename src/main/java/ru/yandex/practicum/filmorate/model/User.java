@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class User {
     private String name;
     @Past
     private LocalDate birthday;
-    private Set<Long> friends;
+    public Set<Long> friends;
 
     public void addFriend(long friendId) {
         friends.add(friendId);
