@@ -66,7 +66,7 @@ public class InMemoryUserStorage implements UserStorage {
                     .email(user.getEmail())
                     .birthday(user.getBirthday())
                     .name(user.getName())
-//                    .friends(user.getFriends())
+                    .friends(new HashSet<>(user.getFriends()))
                     .build();
             users.replace(user.getId(), updatedUser);
             log.debug("User {} is updated", updatedUser.getName());
