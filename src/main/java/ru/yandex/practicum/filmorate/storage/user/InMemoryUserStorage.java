@@ -60,16 +60,24 @@ public class InMemoryUserStorage implements UserStorage {
     public User updateUser(User user) {
         if (users.containsKey(user.getId())) {
             log.debug("Starting update {}", user);
-            User updatedUser = User.builder()
-                    .id(user.getId())
-                    .login(user.getLogin())
-                    .email(user.getEmail())
-                    .birthday(user.getBirthday())
-                    .name(user.getName())
-                    .friends(new HashSet<>(user.getFriends()))
-                    .build();
-            users.replace(user.getId(), updatedUser);
-            log.debug("User {} is updated", updatedUser.getName());
+            User newUser = new User();
+            newUser.setId(user.getId());
+            newUser.setLogin(user.getLogin());
+            newUser.setEmail(user.getEmail());
+            newUser.setBirthday(user.getBirthday());
+            newUser.setName(user.getName());
+            newUser.setFriends(new HashSet<>());
+            newUser.setFriends(user.getFriends());
+//            User updatedUser = User.builder()
+//                    .id(user.getId())
+//                    .login(user.getLogin())
+//                    .email(user.getEmail())
+//                    .birthday(user.getBirthday())
+//                    .name(user.getName())
+//                    .friends(user.getFriends())
+//                    .build();
+            users.replace(user.getId(), newUser);
+            log.debug("User {} is updated", newUser.getName());
             return users.get(user.getId());
         }
         log.error("User with ID {} is not found", user.getId());
