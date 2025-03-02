@@ -45,11 +45,18 @@ public class ExceptionController {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleRunTimeException(final RuntimeException e) {
+        String errorMessage = "Произлшла внутренняя ошибка сервера: ";
+        errorMessage += "Тип исключения - " + e.getClass().getSimpleName() + ". ";
+        if (e.getMessage() != null && !e.getMessage().isEmpty()) {
+            errorMessage += "Сообщение: " + e.getMessage();
+        } else {
+            errorMessage += "Сообщение отсутствует.";
+        }
         log.error("{} - {}", HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        return new ErrorResponse(e.getMessage());
+        return new ErrorResponse(errorMessage);
     }
 
     @Getter
