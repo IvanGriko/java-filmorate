@@ -10,6 +10,7 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -69,7 +70,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular?count={count}")
-    public Set<Film> getPopularFilms(@RequestParam(required = false) Integer count) {
+    public List<Film> getPopularFilms(@RequestParam(required = false) Integer count) {
         if (count > getFilms().size()) {
             count = getFilms().size();
         }

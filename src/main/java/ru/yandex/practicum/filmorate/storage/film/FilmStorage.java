@@ -4,6 +4,7 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public interface FilmStorage {
@@ -22,5 +23,5 @@ public interface FilmStorage {
 
     Film removeLike(long filmId, long userId) throws NotFoundException;
 
-    Set<Film> getPopularFilms(Integer count);
+    List<Film> getPopularFilms(Integer count);
 }
