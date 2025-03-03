@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -70,11 +71,13 @@ public class FilmController {
         return filmService.removeLike(filmId, userId);
     }
 
-    @GetMapping("/popular")
-    @ResponseStatus(HttpStatus.OK)
-    public Collection<Film> getPopularFilms(@RequestParam(value = "count", defaultValue = "10") Integer count) {
+//    @GetMapping("/popular")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Collection<Film> getPopularFilms(@RequestParam(value = "count", defaultValue = "10") Integer count) {
 //    @GetMapping("/popular?count={count}")
 //    public List<Film> getPopularFilms(@RequestParam(required = false) Integer count) {
+    @GetMapping("/popular")
+    public Collection<Film> getPopularFilms(@RequestParam(defaultValue = "10") @Positive Integer count) {
         if (count == null || count < 1) {
             count = 10;
         }
