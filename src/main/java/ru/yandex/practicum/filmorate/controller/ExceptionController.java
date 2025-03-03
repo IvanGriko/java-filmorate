@@ -4,6 +4,7 @@ import jakarta.validation.ValidationException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,11 +39,11 @@ public class ExceptionController {
         return new ErrorResponse(defaultMessage);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNotFoundException(final NotFoundException e) {
+    public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
         log.error("{} - {}", HttpStatus.NOT_FOUND, e.getMessage());
-        return new ErrorResponse(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(Throwable.class)

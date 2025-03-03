@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
@@ -58,30 +59,21 @@ public class InMemoryUserStorage implements UserStorage {
     @SneakyThrows
     @Override
     public User updateUser(User user) {
-        if (users.containsKey(user.getId())) {
-            log.debug("Starting update {}", user);
-            User newUser = new User();
-            newUser.setId(user.getId());
-            newUser.setLogin(user.getLogin());
-            newUser.setEmail(user.getEmail());
-            newUser.setBirthday(user.getBirthday());
+        log.debug("Starting update {}", user);
+        User newUser = new User();
+        newUser.setId(user.getId());
+        newUser.setLogin(user.getLogin());
+        newUser.setEmail(user.getEmail());
+        newUser.setBirthday(user.getBirthday());
+        if (user.getName() == null || user.getName().isBlank()) {
+            newUser.setName(user.getLogin());
+        } else {
             newUser.setName(user.getName());
-            newUser.setFriends(new HashSet<>());
-            newUser.setFriends(user.getFriends());
-//            User updatedUser = User.builder()
-//                    .id(user.getId())
-//                    .login(user.getLogin())
-//                    .email(user.getEmail())
-//                    .birthday(user.getBirthday())
-//                    .name(user.getName())
-//                    .friends(user.getFriends())
-//                    .build();
-            users.replace(user.getId(), newUser);
-            log.debug("User {} is updated", newUser.getName());
-            return users.get(user.getId());
         }
-        log.error("User with ID {} is not found", user.getId());
-        throw new NotFoundException("Пользователь с ID " + user.getId() + " не найден");
+        newUser.setFriends(new HashSet<>(user.getFriends()));
+        users.replace(user.getId(), newUser);
+        log.debug("User {} is updated", newUser.getName());
+        return users.get(user.getId());
     }
 
     @SneakyThrows

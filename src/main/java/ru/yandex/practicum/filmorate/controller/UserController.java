@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
@@ -39,6 +40,8 @@ public class UserController {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(NotFoundException.class)
     public User updateUser(@Valid @RequestBody User user) {
         return userService.updateUser(user);
     }
