@@ -104,6 +104,12 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public List<Film> getPopularFilms(Integer count) {
         log.debug("Starting get {} popular films", count);
+        if (count < 1) {
+            count = 10;
+        }
+        if (count > getFilms().size()) {
+            count = getFilms().size();
+        }
         return new ArrayList<>(getFilms()).stream()
                 .sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
                 .limit(count)
