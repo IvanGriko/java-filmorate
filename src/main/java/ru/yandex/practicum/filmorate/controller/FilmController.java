@@ -55,7 +55,7 @@ public class FilmController {
         return filmService.removeLike(filmId, userId);
     }
 
-    @GetMapping("/popular")
+    @GetMapping("/popular?count={count}")
     public Set<Film> getPopularFilms(@RequestParam(required = false) Integer count) {
         if (count == null || count < 1) {
             count = 10;
