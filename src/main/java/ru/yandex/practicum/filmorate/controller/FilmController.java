@@ -76,6 +76,8 @@ public class FilmController {
             count = 10;
         } else if (count > getFilms().size()) {
             count = getFilms().size();
+        } else {
+            count = 3;
         }
         return filmService.getPopularFilms(count);
     }
