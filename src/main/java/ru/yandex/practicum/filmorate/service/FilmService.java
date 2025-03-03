@@ -25,23 +25,23 @@ public class FilmService {
         return filmStorage.createFilm(film);
     }
 
-    public Film getFilm(long filmId) throws NotFoundException {
+    public Film getFilm(long filmId) {
         return filmStorage.getFilm(filmId);
     }
 
-    public Film updateFilm(Film film) throws NotFoundException {
+    public Film updateFilm(Film film) {
         return filmStorage.updateFilm(film);
     }
 
-    public Set<Long> getLikes(long filmId) throws NotFoundException {
+    public Set<Long> getLikes(long filmId) {
         return filmStorage.getLikes(filmId);
     }
 
-    public Film addLike(long filmId, long userId) throws NotFoundException {
+    public Film addLike(long filmId, long userId) {
         return filmStorage.addLike(filmId, userId);
     }
 
-    public Film removeLike(long filmId, long userId) throws NotFoundException {
+    public Film removeLike(long filmId, long userId) {
         return filmStorage.removeLike(filmId, userId);
     }
 
