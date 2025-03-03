@@ -69,7 +69,10 @@ public class InMemoryUserStorage implements UserStorage {
         } else {
             newUser.setName(user.getName());
         }
-        newUser.setFriends(new HashSet<>(user.getFriends()));
+        newUser.setFriends(new HashSet<>());
+        if (!(user.getFriends() == null)) {
+            newUser.setFriends(user.getFriends());
+        }
         users.replace(user.getId(), newUser);
         log.debug("User {} is updated", newUser.getName());
         return users.get(user.getId());
