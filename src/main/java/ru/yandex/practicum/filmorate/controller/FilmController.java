@@ -70,6 +70,9 @@ public class FilmController {
 
     @GetMapping("/popular?count={count}")
     public Set<Film> getPopularFilms(@RequestParam(required = false) Integer count) {
+        if (count > getFilms().size()) {
+            count = getFilms().size();
+        }
         if (count == null || count < 1) {
             count = 10;
         }
