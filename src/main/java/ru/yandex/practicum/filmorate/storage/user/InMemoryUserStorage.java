@@ -98,10 +98,16 @@ public class InMemoryUserStorage implements UserStorage {
 
     @SneakyThrows
     @Override
-    public Set<Long> getFriends(long userId) {
+    public Set<User> getFriends(long userId) {
         if (users.containsKey(userId)) {
             log.debug("Starting get friends set of user with ID {}", userId);
-            return users.get(userId).getFriends();
+            Set<User> friendsSet = new HashSet<>();
+            User u = users.get(userId);
+            for (Long friendId : users.get(userId).getFriends()) {
+                User friend = users.get(friendId);
+                friendsSet.add(friend);
+            }
+            return friendsSet;
         }
         log.error("User with ID {} is not found", userId);
         throw new NotFoundException("User with ID " + userId + "not found");
@@ -140,7 +146,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @SneakyThrows
     @Override
-    public Set<Long> getCommonFriends(long user1Id, long user2Id) {
+    public Set<User> getCommonFriends(long user1Id, long user2Id) {
         if (!users.containsKey(user1Id)) {
             log.error("User with ID {} is not found", user1Id);
             throw new NotFoundException("User with ID " + user1Id + "not found");
@@ -150,8 +156,8 @@ public class InMemoryUserStorage implements UserStorage {
             throw new NotFoundException("User with ID " + user2Id + "not found");
         }
         log.debug("Starting get common friends of users with ID {} and ID {}", user1Id, user2Id);
-        Set<Long> friends1 = getFriends(user1Id);
-        Set<Long> friends2 = getFriends(user2Id);
+        Set<User> friends1 = getFriends(user1Id);
+        Set<User> friends2 = getFriends(user2Id);
         return friends1.stream().filter(friends2::contains).collect(Collectors.toSet());
     }
 }
