@@ -103,9 +103,8 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Set<Film> getPopularFilms(int count) {
+    public Set<Film> getPopularFilms(Integer count) {
         log.debug("Starting get {} popular films", count);
-
         return getFilms().stream()
                 .sorted(new FilmsByLikesComparator())
                 .limit(count)

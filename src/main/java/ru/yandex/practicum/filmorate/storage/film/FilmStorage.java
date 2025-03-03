@@ -22,5 +22,5 @@ public interface FilmStorage {
 
     Film removeLike(long filmId, long userId) throws NotFoundException;
 
-    Set<Film> getPopularFilms(int count);
+    Set<Film> getPopularFilms(Integer count);
 }
