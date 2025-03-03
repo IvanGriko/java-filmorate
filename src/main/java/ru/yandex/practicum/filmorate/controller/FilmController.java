@@ -56,7 +56,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular?count={count}")
-    public Set<Film> getPopularFilms(@RequestParam(required = false) int count) {
+    public Set<Film> getPopularFilms(@RequestParam(required = false) @PathVariable int count) {
         return filmService.getPopularFilms(count);
     }
 }
