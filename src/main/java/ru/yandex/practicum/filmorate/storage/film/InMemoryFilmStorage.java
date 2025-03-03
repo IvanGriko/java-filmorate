@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
-//import ru.yandex.practicum.filmorate.model.FilmsByLikesComparator;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -110,9 +108,5 @@ public class InMemoryFilmStorage implements FilmStorage {
                 .sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
                 .limit(count)
                 .collect(Collectors.toSet());
-//        return getFilms().stream()
-//                .sorted(new FilmsByLikesComparator())
-//                .limit(count)
-//                .collect(Collectors.toSet());
     }
 }
