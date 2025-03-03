@@ -32,27 +32,27 @@ public class FilmController {
     }
 
     @GetMapping ("/{filmId}")
-    public Film getFilm(@PathVariable long filmId) throws NotFoundException {
+    public Film getFilm(@PathVariable long filmId) {
         return filmService.getFilm(filmId);
     }
 
     @PutMapping
-    public Film updateFilm(@Valid @RequestBody Film film) throws NotFoundException {
+    public Film updateFilm(@Valid @RequestBody Film film) {
         return filmService.updateFilm(film);
     }
 
     @GetMapping("/{filmId}/likes")
-    public Set<Long> getLikes(@PathVariable long filmId) throws NotFoundException {
+    public Set<Long> getLikes(@PathVariable long filmId) {
         return filmService.getLikes(filmId);
     }
 
     @PutMapping("/{filmId}/like/{userId}")
-    public Film addLike(@PathVariable long filmId, @PathVariable long userId) throws NotFoundException {
+    public Film addLike(@PathVariable long filmId, @PathVariable long userId) {
         return filmService.addLike(filmId, userId);
     }
 
     @DeleteMapping("/{filmId}/like/{userId}")
-    public Film removeLike(@PathVariable long filmId, @PathVariable long userId) throws NotFoundException {
+    public Film removeLike(@PathVariable long filmId, @PathVariable long userId) {
         return filmService.removeLike(filmId, userId);
     }
 

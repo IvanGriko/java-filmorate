@@ -52,7 +52,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film updateFilm(@Valid @RequestBody Film film) throws NotFoundException {
+    public Film updateFilm(@Valid @RequestBody Film film) {
         log.debug("Starting update {}", film);
         if (!films.containsKey(film.getId())) {
             log.error("Film with ID {} is not found", film.getId());
@@ -80,7 +80,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId).getLikes();
     }
 
-    public Film addLike(long filmId, long userId) throws NotFoundException {
+    public Film addLike(long filmId, long userId) {
         log.debug("Starting add like to film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
             log.error("Film with ID {} is not found", filmId);
