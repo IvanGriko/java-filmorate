@@ -25,5 +25,6 @@ public class Film {
     private LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма не может быть меньше 0")
     private Integer duration;
+    @Getter
     private Set<Long> likes;
 }
