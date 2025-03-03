@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
@@ -70,11 +71,10 @@ public class FilmController {
     }
 
     @GetMapping("/popular?count={count}")
-    public List<Film> getPopularFilms(@RequestParam Integer count) {
+    public List<Film> getPopularFilms(@RequestParam @Positive Integer count) {
         if (count == null || count < 1) {
             count = 10;
-        }
-        if (count > getFilms().size()) {
+        } else if (count > getFilms().size()) {
             count = getFilms().size();
         }
         return filmService.getPopularFilms(count);
