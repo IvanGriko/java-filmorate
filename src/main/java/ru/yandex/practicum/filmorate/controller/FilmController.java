@@ -3,7 +3,7 @@ package ru.yandex.practicum.filmorate.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+//import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
