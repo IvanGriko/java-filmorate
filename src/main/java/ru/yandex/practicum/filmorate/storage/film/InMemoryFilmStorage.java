@@ -106,8 +106,12 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Set<Film> getPopularFilms(Integer count) {
         log.debug("Starting get {} popular films", count);
         return getFilms().stream()
-                .sorted(new FilmsByLikesComparator())
+                .sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
                 .limit(count)
                 .collect(Collectors.toSet());
+//        return getFilms().stream()
+//                .sorted(new FilmsByLikesComparator())
+//                .limit(count)
+//                .collect(Collectors.toSet());
     }
 }
