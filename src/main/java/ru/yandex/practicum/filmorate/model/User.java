@@ -7,13 +7,16 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Validated
 @Builder
 public class User {
@@ -29,11 +32,20 @@ public class User {
     private LocalDate birthday;
     public Set<Long> friends;
 
-    public User() {
-
-    }
-
     public void addFriend(long friendId) {
         friends.add(friendId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

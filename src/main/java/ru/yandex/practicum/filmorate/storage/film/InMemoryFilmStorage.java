@@ -1,11 +1,9 @@
 package ru.yandex.practicum.filmorate.storage.film;
 
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -30,7 +28,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film createFilm(@Valid @RequestBody Film film) {
+    public Film createFilm(Film film) {
         log.debug("Starting post {}", film);
         ++lastFilmId;
         film.setId(lastFilmId);
@@ -51,7 +49,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film updateFilm(@Valid @RequestBody Film film) {
+    public Film updateFilm(Film film) {
         log.debug("Starting update {}", film);
         if (!films.containsKey(film.getId())) {
             log.error("Film with ID {} is not found", film.getId());
@@ -70,6 +68,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return updatedFilm;
     }
 
+    @Override
     public Set<Long> getLikes(long filmId) throws NotFoundException {
         log.debug("Starting get likes of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
@@ -79,6 +78,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId).getLikes();
     }
 
+    @Override
     public Film addLike(long filmId, long userId) {
         log.debug("Starting add like to film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
@@ -90,6 +90,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId);
     }
 
+    @Override
     public Film removeLike(long filmId, long userId) throws NotFoundException {
         log.debug("Starting remove like of film by ID {}", filmId);
         if (!films.containsKey(filmId)) {
@@ -111,7 +112,7 @@ public class InMemoryFilmStorage implements FilmStorage {
             count = getFilms().size();
         }
         return new ArrayList<>(getFilms()).stream()
-                .sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
+                .sorted((f1, f2) -> Integer.compare(f2.getLikes().size(), f1.getLikes().size()))
                 .limit(count)
                 .collect(Collectors.toList());
     }

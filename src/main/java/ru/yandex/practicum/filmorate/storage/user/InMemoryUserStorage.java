@@ -70,7 +70,7 @@ public class InMemoryUserStorage implements UserStorage {
             newUser.setName(user.getName());
         }
         newUser.setFriends(new HashSet<>());
-        if (!(user.getFriends() == null)) {
+        if (user.getFriends() != null) {
             newUser.setFriends(user.getFriends());
         }
         users.replace(user.getId(), newUser);
@@ -99,18 +99,18 @@ public class InMemoryUserStorage implements UserStorage {
     @SneakyThrows
     @Override
     public Set<User> getFriends(long userId) {
-        if (users.containsKey(userId)) {
-            log.debug("Starting get friends set of user with ID {}", userId);
-            Set<User> friendsSet = new HashSet<>();
-            User u = users.get(userId);
-            for (Long friendId : users.get(userId).getFriends()) {
-                User friend = users.get(friendId);
-                friendsSet.add(friend);
+        if (!users.containsKey(userId)) {
+            log.error("User with ID {} is not found", userId);
+            throw new NotFoundException("User with ID " + userId + "not found");
             }
-            return friendsSet;
+        log.debug("Starting get friends set of user with ID {}", userId);
+        Set<User> friendsSet = new HashSet<>();
+        User u = users.get(userId);
+        for (Long friendId : users.get(userId).getFriends()) {
+            User friend = users.get(friendId);
+            friendsSet.add(friend);
         }
-        log.error("User with ID {} is not found", userId);
-        throw new NotFoundException("User with ID " + userId + "not found");
+        return friendsSet;
     }
 
     @SneakyThrows
@@ -135,13 +135,13 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User removeAllFriends(long userId) {
         if (!users.containsKey(userId)) {
-            log.debug("Starting remove all friends of user with ID {}", userId);
-            users.get(userId).getFriends().clear();
-            log.debug("All friends of user with ID {} is removed", userId);
-            return users.get(userId);
+            log.error("User with ID {} is not found", userId);
+            throw new NotFoundException("User with ID " + userId + "not found");
         }
-        log.error("User with ID {} is not found", userId);
-        throw new NotFoundException("User with ID " + userId + "not found");
+        log.debug("Starting remove all friends of user with ID {}", userId);
+        users.get(userId).getFriends().clear();
+        log.debug("All friends of user with ID {} is removed", userId);
+        return users.get(userId);
     }
 
     @SneakyThrows

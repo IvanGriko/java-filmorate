@@ -2,30 +2,21 @@ package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/films")
 public class FilmController {
 
-    @Autowired
     private final FilmService filmService;
-    private final UserService userService;
-
-    public FilmController(FilmService filmService, UserService userService) {
-        this.filmService = filmService;
-        this.userService = userService;
-    }
 
     @GetMapping
     public Collection<Film> getFilms() {
@@ -54,19 +45,11 @@ public class FilmController {
 
     @PutMapping("/{filmId}/like/{userId}")
     public Film addLike(@PathVariable long filmId, @PathVariable long userId) {
-        User u = userService.getUser(userId);
-        if (u == null) {
-            throw new NotFoundException("User is not found");
-        }
         return filmService.addLike(filmId, userId);
     }
 
     @DeleteMapping("/{filmId}/like/{userId}")
     public Film removeLike(@PathVariable long filmId, @PathVariable long userId) {
-        User u = userService.getUser(userId);
-        if (u == null) {
-            throw new NotFoundException("User is not found");
-        }
         return filmService.removeLike(filmId, userId);
     }
 
