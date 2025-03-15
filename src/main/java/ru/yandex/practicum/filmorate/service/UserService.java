@@ -65,4 +65,8 @@ public class UserService {
     public Set<User> getCommonFriends(long user1Id, long user2Id) {
         return userStorage.getCommonFriends(user1Id, user2Id);
     }
+
+    public boolean friendshipVerification(long user1Id, long user2Id) {
+        return userStorage.friendshipVerification(user1Id, user2Id);
+    }
 }

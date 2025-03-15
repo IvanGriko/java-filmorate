@@ -24,4 +24,6 @@ public interface UserStorage {
     User removeAllFriends(long userId);
 
     Set<User> getCommonFriends(long user1Id, long user2Id);
+
+    boolean friendshipVerification(long userId, long friendId);
 }

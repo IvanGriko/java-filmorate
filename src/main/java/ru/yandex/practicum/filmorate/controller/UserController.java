@@ -66,4 +66,9 @@ public class UserController {
     public Set<User> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
         return userService.getCommonFriends(id, otherId);
     }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public boolean friendshipVerification(@PathVariable long id, @PathVariable long otherId) {
+        return userService.friendshipVerification(id, otherId);
+    }
 }

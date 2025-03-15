@@ -160,4 +160,21 @@ public class InMemoryUserStorage implements UserStorage {
         Set<User> friends2 = getFriends(user2Id);
         return friends1.stream().filter(friends2::contains).collect(Collectors.toSet());
     }
+
+    @SneakyThrows
+    @Override
+    public boolean friendshipVerification(long user1Id, long user2Id) {
+        if (!users.containsKey(user1Id)) {
+            log.error("User with ID {} is not found", user1Id);
+            throw new NotFoundException("User with ID " + user1Id + "not found");
+        }
+        if (!users.containsKey(user2Id)) {
+            log.error("User with ID {} is not found", user2Id);
+            throw new NotFoundException("User with ID " + user2Id + "not found");
+        }
+        log.debug("Starting verification of friendship of users with ID {} and ID {}", user1Id, user2Id);
+        Set<User> friends1 = getFriends(user1Id);
+        Set<User> friends2 = getFriends(user2Id);
+        return friends1.contains(users.get(user2Id)) && friends2.contains(users.get(user1Id));
+    }
 }
