@@ -35,8 +35,6 @@ CREATE TABLE "likes"(
 );
 ALTER TABLE
     "likes" ADD PRIMARY KEY("filmId");
-ALTER TABLE
-    "likes" ADD PRIMARY KEY("userId");
 CREATE TABLE "friendship"(
     "userId" FLOAT(53) NOT NULL,
     "friendId" FLOAT(53) NOT NULL,
@@ -53,8 +51,6 @@ CREATE TABLE "film_genres"(
 ALTER TABLE
     "film_genres" ADD PRIMARY KEY("filmId");
 ALTER TABLE
-    "film_genres" ADD PRIMARY KEY("genreId");
-ALTER TABLE
     "films" ADD CONSTRAINT "films_mpaid_foreign" FOREIGN KEY("mpaId") REFERENCES "mpa_ratings"("mpaId");
 ALTER TABLE
     "users" ADD CONSTRAINT "users_userid_foreign" FOREIGN KEY("userId") REFERENCES "friendship"("friendId");
@@ -63,7 +59,7 @@ ALTER TABLE
 ALTER TABLE
     "likes" ADD CONSTRAINT "likes_filmid_foreign" FOREIGN KEY("filmId") REFERENCES "films"("filmId");
 ALTER TABLE
-    "genres" ADD CONSTRAINT "genres_genreid_foreign" FOREIGN KEY("genreId") REFERENCES "film_genres"("genreId");
+    "film_genres" ADD CONSTRAINT "film_genres_genreid_foreign" FOREIGN KEY("genreId") REFERENCES "genres"("genreId");
 ALTER TABLE
     "likes" ADD CONSTRAINT "likes_userid_foreign" FOREIGN KEY("userId") REFERENCES "users"("userId");
 ALTER TABLE
