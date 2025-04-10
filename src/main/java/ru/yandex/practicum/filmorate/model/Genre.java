@@ -9,11 +9,11 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Genre {
 
-    private int genreId;
+    private int id;
     private String name;
 
     public Genre(int genreId, String name) {
-        this.genreId = genreId;
+        this.id = genreId;
         this.name = name;
     }
 
@@ -22,12 +22,12 @@ public class Genre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return genreId == genre.genreId;
+        return id == genre.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(genreId);
+        return Objects.hashCode(id);
     }
 }
 

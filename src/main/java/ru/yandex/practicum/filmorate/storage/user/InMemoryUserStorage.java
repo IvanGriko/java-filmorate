@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.storage.user;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.controller.UserController;
@@ -10,10 +11,10 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Repository
+@Qualifier("inMemoryUserStorage")
 public class InMemoryUserStorage implements UserStorage {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final Map<Long, User> users = new HashMap<>();
@@ -39,7 +40,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.debug("User {} is created", user.getName());
         ++lastUserId;
         user.setId(lastUserId);
-        user.setFriends(new HashSet<>());
+        user.setFriends(new ArrayList<>());
         users.put(user.getId(), user);
         return user;
     }
@@ -69,7 +70,7 @@ public class InMemoryUserStorage implements UserStorage {
         } else {
             newUser.setName(user.getName());
         }
-        newUser.setFriends(new HashSet<>());
+        newUser.setFriends(new ArrayList<>());
         if (user.getFriends() != null) {
             newUser.setFriends(user.getFriends());
         }
@@ -80,7 +81,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @SneakyThrows
     @Override
-    public User addFriend(long userId, long friendId) {
+    public Long addFriend(Long userId, Long friendId) {
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
             throw new NotFoundException("User with ID " + userId + "not found");
@@ -91,24 +92,20 @@ public class InMemoryUserStorage implements UserStorage {
         }
         log.debug("Starting add friend ID {} to user ID {}", friendId, userId);
         users.get(userId).getFriends().add(friendId);
-        users.get(friendId).getFriends().add(userId);
-        log.debug("Friend ID {} is added to user ID {}", friendId, userId);
-        return users.get(userId);
+        return friendId;
     }
 
     @SneakyThrows
     @Override
-    public Set<User> getFriends(long userId) {
+    public Set<User> getFriends(Long userId) {
         if (!users.containsKey(userId)) {
             log.error("User with ID {} is not found", userId);
-            throw new NotFoundException("User with ID " + userId + "not found");
-            }
+            throw new NotFoundException("User with ID " + userId + " not found");
+        }
         log.debug("Starting get friends set of user with ID {}", userId);
         Set<User> friendsSet = new HashSet<>();
-        User u = users.get(userId);
         for (Long friendId : users.get(userId).getFriends()) {
-            User friend = users.get(friendId);
-            friendsSet.add(friend);
+            friendsSet.add(users.get(friendId));
         }
         return friendsSet;
     }
@@ -149,16 +146,22 @@ public class InMemoryUserStorage implements UserStorage {
     public Set<User> getCommonFriends(long user1Id, long user2Id) {
         if (!users.containsKey(user1Id)) {
             log.error("User with ID {} is not found", user1Id);
-            throw new NotFoundException("User with ID " + user1Id + "not found");
+            throw new NotFoundException("User with ID " + user1Id + " not found");
         }
         if (!users.containsKey(user2Id)) {
             log.error("User with ID {} is not found", user2Id);
-            throw new NotFoundException("User with ID " + user2Id + "not found");
+            throw new NotFoundException("User with ID " + user2Id + " not found");
         }
         log.debug("Starting get common friends of users with ID {} and ID {}", user1Id, user2Id);
         Set<User> friends1 = getFriends(user1Id);
         Set<User> friends2 = getFriends(user2Id);
-        return friends1.stream().filter(friends2::contains).collect(Collectors.toSet());
+        Set<User> commonFriends = new HashSet<>();
+        for (User friend : friends1) {
+            if (friends2.contains(friend)) {
+                commonFriends.add(friend);
+            }
+        }
+        return commonFriends;
     }
 
     @SneakyThrows

@@ -8,8 +8,9 @@ import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.model.Mpa;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,23 +23,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     private static final LocalDate FIRST_FILM_DATE = LocalDate.of(1895, 12, 28);
     private final Map<Long, Film> films = new HashMap<>();
     private long lastFilmId = 0L;
-    Set<Genre> genresCollection = Set.of(
-            new Genre(1, "Комедия"),
-            new Genre(2, "Драма"),
-            new Genre(3, "Мультфильм"),
-            new Genre(4, "Триллер"),
-            new Genre(5, "Документальный"),
-            new Genre(6, "Боевик")
-    );
-    Set<Genre> genres = new HashSet<>(genresCollection);
-    Set<Mpa> mpaCollection = Set.of(
-            new Mpa(1, "G"),
-            new Mpa(2, "PG"),
-            new Mpa(3, "PG-13"),
-            new Mpa(4, "R"),
-            new Mpa(5, "NC-17")
-    );
-    Set<Mpa> mpaRatings = new HashSet<>(mpaCollection);
 
     @Override
     public Collection<Film> getFilms() {
@@ -67,6 +51,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(filmId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Film updateFilm(Film film) {
         log.debug("Starting update {}", film);
@@ -81,10 +66,27 @@ public class InMemoryFilmStorage implements FilmStorage {
                 .duration(film.getDuration())
                 .releaseDate(film.getReleaseDate())
                 .likes(film.getLikes())
+                .genres(film.getGenres())
+                .mpa(film.getMpa())
                 .build();
         films.replace(film.getId(), updatedFilm);
         log.debug("Film {} is updated", updatedFilm.getName());
         return updatedFilm;
+    }
+
+    @Override
+    public Film mapRowToFilm(ResultSet rs, int rowNum) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public List<Genre> getGenres(long filmId) {
+        log.debug("Starting get genres of film by ID {}", filmId);
+        if (!films.containsKey(filmId)) {
+            log.error("Film with ID {} is not found", filmId);
+            throw new NotFoundException("Film with ID " + filmId + " is not found");
+        }
+        return films.get(filmId).getGenres();
     }
 
     @Override

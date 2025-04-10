@@ -9,11 +9,11 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Mpa {
 
-    private int mpaId;
+    private int id;
     private String name;
 
     public Mpa(int mpaId, String name) {
-        this.mpaId = mpaId;
+        this.id = mpaId;
         this.name = name;
     }
 
@@ -22,11 +22,11 @@ public class Mpa {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Mpa mpa = (Mpa) o;
-        return mpaId == mpa.mpaId;
+        return id == mpa.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mpaId);
+        return Objects.hashCode(id);
     }
 }

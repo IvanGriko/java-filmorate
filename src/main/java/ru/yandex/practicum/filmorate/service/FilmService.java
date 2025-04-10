@@ -40,18 +40,10 @@ public class FilmService {
     }
 
     public Film addLike(long filmId, long userId) {
-        User u = userStorage.getUser(userId);
-        if (u == null) {
-            throw new NotFoundException("User is not found");
-        }
         return filmStorage.addLike(filmId, userId);
     }
 
     public Film removeLike(long filmId, long userId) {
-        User u = userStorage.getUser(userId);
-        if (u == null) {
-            throw new NotFoundException("User is not found");
-        }
         return filmStorage.removeLike(filmId, userId);
     }
 

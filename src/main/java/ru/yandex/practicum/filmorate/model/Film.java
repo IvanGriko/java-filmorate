@@ -8,7 +8,9 @@ import org.springframework.validation.annotation.Validated;
 import ru.yandex.practicum.filmorate.annotation.AfterDate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -28,5 +30,12 @@ public class Film {
     @Positive(message = "Продолжительность фильма не может быть меньше 0")
     private Integer duration;
     private Set<Long> likes = new HashSet<>();
+    private List<Genre> genres = new ArrayList<>();
+    @NonNull
+    private Mpa mpa;
 
+    public List<Genre> getGenres() {
+        Set<Genre> uniqueGenres = new HashSet<>(genres);
+        return new ArrayList<>(uniqueGenres);
+    }
 }
