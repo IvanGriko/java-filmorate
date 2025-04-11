@@ -82,7 +82,7 @@ public class FilmDbStorage implements FilmStorage {
         if (keyHolder.getKey() != null) {
             film.setId(keyHolder.getKey().longValue());
         }
-        String genreSql = "INSERT INTO film_genres (film_id, genre_id) " +
+        String genreSql = "UPDATE INTO film_genres (film_id, genre_id) " +
                 "VALUES (?, ?)";
         for (Genre genre : film.getGenres()) {
             jdbcTemplate.update(genreSql, film.getId(), genre.getId());
