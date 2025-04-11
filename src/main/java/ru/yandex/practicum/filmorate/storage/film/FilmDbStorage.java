@@ -155,7 +155,9 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public Film updateFilm(Film film) {
-        String checkSql = "SELECT COUNT(*) FROM films WHERE film_id = ?";
+        String checkSql = "SELECT COUNT(*) " +
+                "FROM films " +
+                "WHERE film_id = ?";
         Integer exists = jdbcTemplate.queryForObject(checkSql, Integer.class, film.getId());
         if (exists == null || exists == 0) {
             throw new NotFoundException("Фильм с id = " + film.getId() + " не найден");
