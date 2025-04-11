@@ -34,7 +34,8 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User createUser(User user) {
-        String sql = "INSERT INTO users (email, login, name, birthday) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO users (email, login, name, birthday) " +
+                "VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -52,7 +53,9 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User getUser(long userId) {
-        String sql = "SELECT * FROM users WHERE user_id = ?";
+        String sql = "SELECT * " +
+                "FROM users " +
+                "WHERE user_id = ?";
         User user = jdbcTemplate.query(sql, this::mapRowToUser, userId).stream()
                 .findFirst()
                 .orElse(null);
@@ -74,7 +77,9 @@ public class UserDbStorage implements UserStorage {
         if (!userExists(user.getId())) {
             throw new NotFoundException("User with ID = " + user.getId() + " is not found");
         }
-        String sql = "UPDATE users SET email = ?, login = ?, name = ?, birthday = ? WHERE user_id = ?";
+        String sql = "UPDATE users " +
+                "SET email = ?, login = ?, name = ?, birthday = ? " +
+                "WHERE user_id = ?";
         jdbcTemplate.update(sql,
                 user.getEmail(),
                 user.getLogin(),
@@ -92,7 +97,8 @@ public class UserDbStorage implements UserStorage {
         if (getUser(friendId) == null || friendId == 0) {
             throw new NotFoundException("User with id = " + friendId + " is not found");
         }
-        String sql = "INSERT INTO friendship (user_id, friend_id) VALUES (?, ?);";
+        String sql = "INSERT INTO friendship (user_id, friend_id) " +
+                "VALUES (?, ?);";
         jdbcTemplate.update(sql, userId, friendId);
         return friendId;
     }
@@ -102,7 +108,9 @@ public class UserDbStorage implements UserStorage {
         if (getUser(userId) == null || userId == 0) {
             throw new NotFoundException("User with id = " + userId + " is not found");
         }
-        String sql = "SELECT friend_id FROM friendship WHERE user_id = ?";
+        String sql = "SELECT friend_id " +
+                "FROM friendship " +
+                "WHERE user_id = ?";
         Set<Long> friendIds = new HashSet<>(jdbcTemplate.query(sql, (rs, rowNum) -> rs.getLong("friend_id"), userId));
         Set<User> friends = new HashSet<>();
         for (Long friendId : friendIds) {
@@ -122,34 +130,43 @@ public class UserDbStorage implements UserStorage {
         if (getUser(friendId) == null || friendId == 0) {
             throw new NotFoundException("User with id = " + friendId + " is not found");
         }
-        String sql = "DELETE FROM friendship WHERE user_id = ? AND friend_id = ?";
+        String sql = "DELETE FROM friendship " +
+                "WHERE user_id = ? AND friend_id = ?";
         jdbcTemplate.update(sql, userId, friendId);
         return getUser(userId);
     }
 
     @Override
     public User removeAllFriends(long userId) {
-        String sql = "DELETE FROM friendship WHERE user_id = ?";
+        String sql = "DELETE FROM friendship " +
+                "WHERE user_id = ?";
         jdbcTemplate.update(sql, userId);
         return getUser(userId);
     }
 
+    @Override
     public Set<User> getCommonFriends(long user1Id, long user2Id) {
         String sql = "SELECT u.user_id, u.email, u.login, u.name, u.birthday " +
                 "FROM friendship fs " +
-                "INNER JOIN friendship fr ON fs.friend_id = fr.friend_id " +
-                "INNER JOIN users u ON u.user_id = fs.friend_id " +
+                "INNER JOIN friendship fr " +
+                "ON fs.friend_id = fr.friend_id " +
+                "INNER JOIN users u " +
+                "ON u.user_id = fs.friend_id " +
                 "WHERE fs.user_id = ? AND fr.user_id = ?";
         return new HashSet<>(jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToUser(rs, rowNum), user1Id, user2Id));
     }
 
-    public boolean friendshipVerification(long userId, long friendId) {
+    @Override
+    public boolean friendshipVerification(long user1Id, long user2Id) {
         return false;
     }
 
     private boolean userExists(Long userId) {
-        String sql = "SELECT COUNT(*) FROM users WHERE user_id = ?";
+        String sql = "SELECT COUNT(*) " +
+                "FROM users " +
+                "WHERE user_id = ?";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, userId);
         return count > 0;
     }
+
 }

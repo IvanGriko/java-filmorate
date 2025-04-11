@@ -29,17 +29,4 @@ public class MpaService {
         return mpaRepository.updateMpa(mpa);
     }
 
-//    public Mpa createMpa(Mpa mpa) {
-//        return mpaRepository.createMpa(mpa);
-//    }
-//
-//    public List<Mpa> getAllMpa() {
-//        return mpaRepository.getAllMpa();
-//    }
-//
-//    public Mpa getMpaById(int ratingId) {
-//        return mpaRepository.getMpaById(ratingId)
-//                .orElseThrow(() -> new NotFoundException("MPA с id = " + ratingId + " не найден"));
-//    }
-
 }

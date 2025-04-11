@@ -18,8 +18,6 @@ import java.util.Set;
 public class UserService {
 
     @Autowired
-    private final UserStorage userStorage;
-    @Autowired
     private final UserDbStorage userDbStorage;
 
     public Collection<User> getUsers() {
@@ -39,10 +37,6 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        User u = userDbStorage.getUser(user.getId());
-        if (u == null) {
-            throw new NotFoundException("User is not found");
-        }
         return userDbStorage.updateUser(user);
     }
 
@@ -63,10 +57,11 @@ public class UserService {
     }
 
     public Set<User> getCommonFriends(long user1Id, long user2Id) {
-        return userStorage.getCommonFriends(user1Id, user2Id);
+        return userDbStorage.getCommonFriends(user1Id, user2Id);
     }
 
     public boolean friendshipVerification(long user1Id, long user2Id) {
-        return userStorage.friendshipVerification(user1Id, user2Id);
+        return userDbStorage.friendshipVerification(user1Id, user2Id);
     }
+
 }

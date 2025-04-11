@@ -38,4 +38,5 @@ public class Film {
         Set<Genre> uniqueGenres = new HashSet<>(genres);
         return new ArrayList<>(uniqueGenres);
     }
+
 }

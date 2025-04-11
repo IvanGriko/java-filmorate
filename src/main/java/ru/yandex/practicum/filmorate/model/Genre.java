@@ -29,5 +29,6 @@ public class Genre {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
 

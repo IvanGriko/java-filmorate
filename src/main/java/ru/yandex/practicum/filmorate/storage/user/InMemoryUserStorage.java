@@ -16,6 +16,7 @@ import java.util.*;
 @Repository
 @Qualifier("inMemoryUserStorage")
 public class InMemoryUserStorage implements UserStorage {
+
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final Map<Long, User> users = new HashMap<>();
     private Long lastUserId = 0L;
@@ -180,4 +181,5 @@ public class InMemoryUserStorage implements UserStorage {
         Set<User> friends2 = getFriends(user2Id);
         return friends1.contains(users.get(user2Id)) && friends2.contains(users.get(user1Id));
     }
+
 }

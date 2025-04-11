@@ -47,21 +47,4 @@ public class GenreRepository {
         return new Genre(rs.getInt("genre_id"), rs.getString("name"));
     }
 
-//    public List<Genre> getAllGenres() {
-//        String sql = "SELECT * FROM genres ORDER BY genre_id";
-//        return jdbcTemplate.query(sql, this::mapRowToGenre);
-//    }
-//
-//    public Optional<Genre> getGenreById(int genreId) {
-//        String sql = "SELECT * FROM genres WHERE genre_id = ?";
-//        List<Genre> result = jdbcTemplate.query(sql, this::mapRowToGenre, genreId);
-//        return result.stream().findFirst();
-//    }
-//
-//    private Genre mapRowToGenre(ResultSet rs, int rowNum) throws SQLException {
-//        Genre genre = new Genre();
-//        genre.setGenreId(rs.getInt("genre_id"));
-//        genre.setName(rs.getString("name"));
-//        return genre;
-//    }
 }

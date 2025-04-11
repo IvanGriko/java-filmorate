@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 public class ExceptionController {
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(final ValidationException e) {
@@ -68,4 +69,5 @@ public class ExceptionController {
             this.error = error;
         }
     }
+
 }

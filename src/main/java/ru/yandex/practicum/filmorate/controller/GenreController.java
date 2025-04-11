@@ -31,14 +31,4 @@ public class GenreController {
         return genreService.getGenreById(id);
     }
 
-//    @GetMapping("/genres")
-//    public List<Genre> getAllGenres() {
-//        return genreService.getAllGenres();
-//    }
-//
-//    @GetMapping("/genres/{id}")
-//    public Genre getGenreById(@PathVariable int id) {
-//        return genreService.getGenreById(id);
-//    }
-
 }

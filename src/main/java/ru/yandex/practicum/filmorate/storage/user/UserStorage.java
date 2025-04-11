@@ -25,5 +25,6 @@ public interface UserStorage {
 
     Set<User> getCommonFriends(long user1Id, long user2Id);
 
-    boolean friendshipVerification(long userId, long friendId);
+    boolean friendshipVerification(long user1Id, long user2Id);
+
 }

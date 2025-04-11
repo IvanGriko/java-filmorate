@@ -9,8 +9,10 @@ import java.lang.annotation.RetentionPolicy;
 @Constraint(validatedBy = AfterDateValidation.class)
 @Past
 public @interface AfterDate {
+
     String message() default "Дата релиза фильма не может быть раньше чем {value}}";
     Class<?>[] groups() default {};
     Class<?>[] payload() default {};
     String value() default "1895-12-28";
+
 }

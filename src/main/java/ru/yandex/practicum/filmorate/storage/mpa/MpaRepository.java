@@ -50,24 +50,4 @@ public class MpaRepository {
         return new Mpa(rs.getInt("mpa_id"), rs.getString("name"));
     }
 
-//    public List<Mpa> getAllMpa() {
-//        String sql = "SELECT * FROM mpa_ratings ORDER BY mpa_id";
-//        return jdbcTemplate.query(sql, this::mapRowToRating);
-//    }
-//
-//    public Optional<Mpa> getMpaById(int mpa_id) {
-//        String sql = "SELECT * FROM mpa_ratings WHERE mpa_id = ?";
-//        List<Mpa> result = jdbcTemplate.query(sql, this::mapRowToRating, mpa_id);
-//        return result.stream().findFirst();
-//    }
-//
-//    private Mpa mapRowToRating(ResultSet rs, int rowNum) throws SQLException {
-//        return new Mpa(rs.getInt("mpa_id"), rs.getString("name"));
-//    }
-//
-//    public Mpa createMpa(Mpa mpa) {
-//        String sql = "SELECT * FROM mpa_ratings WHERE mpa_id = ?";
-//        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToRating(rs, rowNum), mpa.getName())
-//                .stream().findAny().orElse(null);
-//    }
 }

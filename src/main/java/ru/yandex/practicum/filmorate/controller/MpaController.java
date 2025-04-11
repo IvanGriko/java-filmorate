@@ -39,19 +39,4 @@ public class MpaController {
         return mpaService.updateMpa(mpa);
     }
 
-//    @PostMapping("/mpa")
-//    public Mpa create(@Valid @RequestBody Mpa mpa) {
-//        return mpaService.createMpa(mpa);
-//    }
-//
-//    @GetMapping("/mpa")
-//    public List<Mpa> getAllMpa() {
-//        return mpaService.getAllMpa();
-//    }
-//
-//    @GetMapping("/mpa/{id}")
-//    public Mpa getMpaById(@PathVariable int id) {
-//        return mpaService.getMpaById(id);
-//    }
-
 }
