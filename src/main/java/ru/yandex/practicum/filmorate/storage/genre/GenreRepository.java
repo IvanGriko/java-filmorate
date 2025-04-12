@@ -28,9 +28,10 @@ public class GenreRepository {
                 .stream().findAny().orElse(null);
     }
 
-    public List<Genre> getAllGenres() {
+    public Set<Genre> getAllGenres() {
         String sql = "SELECT * FROM genres ORDER BY genre_id";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeGenre(rs));
+        List<Genre> genres = jdbcTemplate.query(sql, (rs, rowNum) -> makeGenre(rs));
+        return new HashSet<>(genres);
     }
 
     public Set<Genre> getGenresByFilm(Film film) {

@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS mpa_ratings (
     name VARCHAR(20) NOT NULL
 );
 
-ALTER TABLE mpa_ratings
-ADD CONSTRAINT IF NOT EXISTS unique_mpa_name UNIQUE (name);
+--ALTER TABLE mpa_ratings
+--ADD CONSTRAINT IF NOT EXISTS unique_mpa_name UNIQUE (name);
 
 CREATE TABLE IF NOT EXISTS films (
     film_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS genres (
     name VARCHAR(50) NOT NULL
 );
 
-ALTER TABLE genres
-ADD CONSTRAINT IF NOT EXISTS unique_genre_name UNIQUE (name);
+--ALTER TABLE genres
+--ADD CONSTRAINT IF NOT EXISTS unique_genre_name UNIQUE (name);
 
 CREATE TABLE IF NOT EXISTS likes (
     film_id BIGINT,

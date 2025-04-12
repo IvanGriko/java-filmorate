@@ -9,7 +9,9 @@ import ru.yandex.practicum.filmorate.model.Mpa;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,9 +28,10 @@ public class MpaRepository {
                 .stream().findAny().orElse(null);
     }
 
-    public List<Mpa> getAllMpa() {
+    public Set<Mpa> getAllMpa() {
         String sql = "SELECT * FROM mpa_ratings ORDER BY mpa_id";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs));
+        List<Mpa> mpas = jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs));
+        return new HashSet<>(mpas);
     }
 
     public Mpa createMpa(Mpa mpa) {
@@ -44,8 +47,8 @@ public class MpaRepository {
         if (getMpaById(mpa.getId()) != null) {
             return mpa;
         }
-//        String sql = "UPDATE mpa_ratings SET name = ? WHERE mpa_id = ?";
-//        jdbcTemplate.update(sql, mpa.getName(), mpa.getId());
+        String sql = "UPDATE mpa_ratings SET name = ? WHERE mpa_id = ?";
+        jdbcTemplate.update(sql, mpa.getName(), mpa.getId());
         return mpa;
     }
 

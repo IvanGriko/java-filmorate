@@ -6,7 +6,6 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.genre.GenreRepository;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -19,7 +18,7 @@ public class GenreService {
         return genreRepository.getGenreById(genreId);
     }
 
-    public List<Genre> getAllGenres() {
+    public Set<Genre> getAllGenres() {
         return genreRepository.getAllGenres();
     }
 
