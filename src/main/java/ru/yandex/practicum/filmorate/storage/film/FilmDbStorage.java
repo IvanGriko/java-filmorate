@@ -36,8 +36,6 @@ public class FilmDbStorage implements FilmStorage {
     private final GenreRepository genreRepository;
     @Autowired
     private final MpaRepository mpaRepository;
-    @Autowired
-    private final UserDbStorage userDbStorage;
 
     @Override
     public Collection<Film> getFilms() {
