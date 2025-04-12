@@ -44,8 +44,8 @@ public class MpaRepository {
         if (getMpaById(mpa.getId()) != null) {
             return mpa;
         }
-        String sql = "UPDATE mpa_ratings SET name = ? WHERE mpa_id = ?";
-        jdbcTemplate.update(sql, mpa.getName(), mpa.getId());
+//        String sql = "UPDATE mpa_ratings SET name = ? WHERE mpa_id = ?";
+//        jdbcTemplate.update(sql, mpa.getName(), mpa.getId());
         return mpa;
     }
 
