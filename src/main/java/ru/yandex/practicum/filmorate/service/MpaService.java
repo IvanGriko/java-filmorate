@@ -3,7 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Mpa;
-import ru.yandex.practicum.filmorate.storage.mpa.MpaRepository;
+import ru.yandex.practicum.filmorate.storage.mpa.MpaDbStorage;
 
 import java.util.Set;
 
@@ -11,22 +11,14 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class MpaService {
 
-    private final MpaRepository mpaRepository;
+    private final MpaDbStorage mpaDbStorage;
 
     public Mpa getMpaById(Integer mpaId) {
-        return mpaRepository.getMpaById(mpaId);
+        return mpaDbStorage.getMpaById(mpaId);
     }
 
     public Set<Mpa> getAllMpa() {
-        return mpaRepository.getAllMpa();
-    }
-
-    public Mpa createMpa(Mpa mpa) {
-        return mpaRepository.createMpa(mpa);
-    }
-
-    public Mpa updateMpa(Mpa mpa) {
-        return mpaRepository.updateMpa(mpa);
+        return mpaDbStorage.getAllMpa();
     }
 
 }

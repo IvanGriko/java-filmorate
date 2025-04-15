@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +19,13 @@ public class MpaController {
     private final MpaService mpaService;
 
     @GetMapping("/mpa/{id}")
-    public Mpa findById(@PathVariable Integer id) {
+    public Mpa findMpaById(@PathVariable Integer id) {
         return mpaService.getMpaById(id);
     }
 
     @GetMapping("/mpa")
-    public Set<Mpa> findAll() {
+    public Set<Mpa> findAllMpa() {
         return mpaService.getAllMpa();
-    }
-
-    @PostMapping("/mpa")
-    public Mpa create(@Valid @RequestBody Mpa mpa) {
-        return mpaService.createMpa(mpa);
-    }
-
-    @PutMapping("/mpa")
-    public Mpa update(@Valid @RequestBody Mpa mpa) {
-        return mpaService.updateMpa(mpa);
     }
 
 }

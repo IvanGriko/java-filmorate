@@ -8,7 +8,6 @@ import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -27,7 +26,6 @@ public class User {
     private String name;
     @Past
     private LocalDate birthday;
-    public List<Long> friends;
 
     public User(Long id, String email, String login, LocalDate birthday, String name) {
         this.id = id;

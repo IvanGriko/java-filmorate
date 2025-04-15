@@ -158,15 +158,15 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public boolean friendshipVerification(long user1Id, long user2Id) {
-        return false;
+        return true;
     }
 
     private boolean userExists(Long userId) {
-        String sql = "SELECT COUNT(*) " +
+        String sql = "SELECT EXISTS(SELECT 1 " +
                 "FROM users " +
-                "WHERE user_id = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, userId);
-        return count > 0;
+                "WHERE user_id = ? " +
+                "LIMIT 1)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, userId);
     }
 
 }

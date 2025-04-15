@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.storage.mpa;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,7 +14,7 @@ import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
-public class MpaRepository {
+public class MpaDbStorage implements MpaStorage {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -24,32 +23,17 @@ public class MpaRepository {
             throw new NotFoundException("mpaId is not found");
         }
         String sql = "SELECT * FROM mpa_ratings WHERE mpa_id = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs), mpaId)
+        return jdbcTemplate.query(sql, (rs, rowNum) -> createMpaFromResultSet(rs), mpaId)
                 .stream().findAny().orElse(null);
     }
 
     public Set<Mpa> getAllMpa() {
         String sql = "SELECT * FROM mpa_ratings ORDER BY mpa_id";
-        List<Mpa> mpas = jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs));
+        List<Mpa> mpas = jdbcTemplate.query(sql, (rs, rowNum) -> createMpaFromResultSet(rs));
         return new HashSet<>(mpas);
     }
 
-    public Mpa createMpa(Mpa mpa) {
-        String sql = "SELECT * FROM mpa_ratings WHERE mpa_id = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs), mpa.getName())
-                .stream().findAny().orElse(null);
-    }
-
-    public Mpa updateMpa(Mpa mpa) {
-        if (getMpaById(mpa.getId()) == null) {
-            throw new EntityNotFoundException("MPA не найден для обновления");
-        }
-        String sql = "UPDATE mpa_ratings SET name = ? WHERE mpa_id = ?";
-        jdbcTemplate.update(sql, mpa.getName(), mpa.getId());
-        return mpa;
-    }
-
-    private Mpa makeMpa(ResultSet rs) throws SQLException {
+    private Mpa createMpaFromResultSet(ResultSet rs) throws SQLException {
         return new Mpa(rs.getInt("mpa_id"), rs.getString("name"));
     }
 
