@@ -249,7 +249,7 @@ class FilmorateApplicationTests {
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
-		Film film = Film.builder ()
+		Film film = Film.builder()
 				.name("film")
 				.description("filmDescription")
 				.duration(100)
