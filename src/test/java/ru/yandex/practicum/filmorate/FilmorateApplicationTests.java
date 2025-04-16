@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
@@ -18,8 +16,6 @@ import ru.yandex.practicum.filmorate.storage.genre.GenreStorage;
 import ru.yandex.practicum.filmorate.storage.mpa.MpaDbStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDbStorage;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -253,7 +249,7 @@ class FilmorateApplicationTests {
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
-		Film film = Film.builder()
+		Film film = Film.builder ()
 				.name("film")
 				.description("filmDescription")
 				.duration(100)
@@ -273,7 +269,7 @@ class FilmorateApplicationTests {
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
-		Film film = Film.builder()
+		Film film = Film.builder ()
 				.name("film")
 				.description("filmDescription")
 				.duration(100)
@@ -294,14 +290,14 @@ class FilmorateApplicationTests {
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
-		Film film1 = Film.builder()
+		Film film1 = Film.builder ()
 				.name("film1")
 				.description("film1description")
 				.duration(100)
 				.mpa(mpa)
 				.releaseDate(LocalDate.of(2025,4,5))
 				.build();
-		Film film2 = Film.builder()
+		Film film2 = Film.builder ()
 				.name("film2")
 				.description("film2description")
 				.duration(120)
@@ -322,7 +318,7 @@ class FilmorateApplicationTests {
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
-		 Film film = Film.builder()
+		 Film film = Film.builder ()
 				 .name("film")
 				 .description("filmdescription")
 				 .duration(100)
