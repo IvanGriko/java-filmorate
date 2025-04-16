@@ -16,19 +16,17 @@ public interface FilmStorage {
 
     Film createFilm(Film film);
 
-    Film getFilm(long filmId) throws NotFoundException;
+    Film getFilm(long filmId);
 
-    Film updateFilm(Film film) throws NotFoundException;
+    Film updateFilm(Film film);
 
     Film mapRowToFilm(ResultSet rs, int rowNum) throws SQLException;
 
-    List<Genre> getGenres(long filmId);
+    Set<Long> getLikes(long filmId);
 
-    Set<Long> getLikes(long filmId) throws NotFoundException;
+    Film addLike(long filmId, long userId);
 
-    Film addLike(long filmId, long userId) throws NotFoundException;
-
-    Film removeLike(long filmId, long userId) throws NotFoundException;
+    Film removeLike(long filmId, long userId);
 
     List<Film> getPopularFilms(Integer count);
 

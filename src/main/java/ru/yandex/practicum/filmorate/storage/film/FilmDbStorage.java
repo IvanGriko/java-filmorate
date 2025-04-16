@@ -184,8 +184,7 @@ public class FilmDbStorage implements FilmStorage {
         return film;
     }
 
-    @Override
-    public List<Genre> getGenres(long filmId) {
+    private List<Genre> getGenres(long filmId) {
         String sql = "SELECT g.genre_id, g.name " +
                 "FROM genres g " +
                 "JOIN film_genres fg " +
