@@ -245,7 +245,7 @@ class FilmorateApplicationTests {
 	public void createFilmTest() {
 		Mpa mpa;
 		if (mpaDbStorage.getMpaById(1) == null) {
-			mpa = new Mpa (1, "G");
+			mpa = new Mpa(1, "G");
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
@@ -265,7 +265,7 @@ class FilmorateApplicationTests {
 	public void getFilmTest() {
 		Mpa mpa;
 		if (mpaDbStorage.getMpaById(1) == null) {
-			mpa = new Mpa (1, "G");
+			mpa = new Mpa(1, "G");
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
@@ -286,7 +286,7 @@ class FilmorateApplicationTests {
 	public void getFilmsTest() {
 		Mpa mpa;
 		if (mpaDbStorage.getMpaById(1) == null) {
-			mpa = new Mpa (1, "G");
+			mpa = new Mpa(1, "G");
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
@@ -314,7 +314,7 @@ class FilmorateApplicationTests {
 	public void updateFilmTest() {
 		Mpa mpa;
 		if (mpaDbStorage.getMpaById(1) == null) {
-			mpa = new Mpa (1, "G");
+			mpa = new Mpa(1, "G");
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
@@ -338,7 +338,7 @@ class FilmorateApplicationTests {
 	public void addLikeTest() {
 		 Mpa mpa;
 		 if (mpaDbStorage.getMpaById(1) == null) {
-			 mpa = new Mpa (1, "G");
+			 mpa = new Mpa(1, "G");
 		 } else {
 			 mpa = mpaDbStorage.getMpaById(1);
 		 }
@@ -366,7 +366,7 @@ class FilmorateApplicationTests {
 	public void getLikesTest() {
 		 Mpa mpa;
 		 if (mpaDbStorage.getMpaById(1) == null) {
-			 mpa = new Mpa (1, "G");
+			 mpa = new Mpa(1, "G");
 		 } else {
 			 mpa = mpaDbStorage.getMpaById(1);
 		 }
@@ -403,7 +403,7 @@ class FilmorateApplicationTests {
 	public void removeLikeTest() {
 		Mpa mpa;
 		if (mpaDbStorage.getMpaById(1) == null) {
-			mpa = new Mpa (1, "G");
+			mpa = new Mpa(1, "G");
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
@@ -442,7 +442,7 @@ class FilmorateApplicationTests {
 	public void getPopularFilmsTest() {
 		Mpa mpa;
 		if (mpaDbStorage.getMpaById(1) == null) {
-			mpa = new Mpa (1, "G");
+			mpa = new Mpa(1, "G");
 		} else {
 			mpa = mpaDbStorage.getMpaById(1);
 		}
