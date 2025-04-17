@@ -125,31 +125,34 @@ class FilmorateApplicationTests {
     public void getFriendsTest() {
         User user = User.builder()
                 .email("userrgvre@email.com")
-                .name("User")
+                .name("Userfdsfghgbv")
                 .login("loginthdfgx")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1fgvfredf@email.com")
-                .name("User1")
+                .name("User1dsfgfnbvf")
                 .login("login1dfjh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2ver@email.com")
-                .name("User2")
+                .name("User2jhdfgvgf")
                 .login("login2gjhfdf")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        userDbStorage.addFriend(1L, 2L);
-        userDbStorage.addFriend(1L, 3L);
+        long userId = userDbStorage.getUserByName("Userfdsfghgbv").getId();
+        long friend1Id = userDbStorage.getUserByName("User1dsfgfnbvf").getId();
+        long friend2Id = userDbStorage.getUserByName("User2jhdfgvgf").getId();
+        userDbStorage.addFriend(userId, friend1Id);
+        userDbStorage.addFriend(userId, friend2Id);
         Set<User> expectedFriends = new HashSet<>();
-        expectedFriends.add(userDbStorage.getUserById(2L));
-        expectedFriends.add(userDbStorage.getUserById(3L));
-        Set<User> actualFriends = userDbStorage.getFriends(1L);
+        expectedFriends.add(userDbStorage.getUserById(friend1Id));
+        expectedFriends.add(userDbStorage.getUserById(friend2Id));
+        Set<User> actualFriends = userDbStorage.getFriends(userId);
         Assertions.assertEquals(expectedFriends, actualFriends,
                 "Friends set is not expected");
     }
