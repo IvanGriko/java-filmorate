@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -203,9 +204,7 @@ public class FilmDbStorage implements FilmStorage {
         String sql = "SELECT user_id " +
                 "FROM likes " +
                 "WHERE film_id = ?";
-        Set<Long> likes = jdbcTemplate.query(sql, new Object[]{filmId}, (rs, rowNum) -> rs.getLong("user_id"))
-                .stream().collect(Collectors.toSet());
-        return likes;
+        return new HashSet<>(jdbcTemplate.query(sql, (rs, rowNum) -> rs.getLong("user_id"), filmId));
     }
 
     @Override
@@ -222,14 +221,17 @@ public class FilmDbStorage implements FilmStorage {
                 "FROM likes " +
                 "WHERE film_id = ? " +
                 "AND user_id = ?";
-        Long like = jdbcTemplate.queryForObject(likeCheckSql, new Object[]{filmId, userId}, Long.class);
+        Long like = jdbcTemplate.query(likeCheckSql, new SingleColumnRowMapper<>(Long.class), filmId, userId)
+                .stream()
+                .findFirst()
+                .orElse(null);
         if (like == null) {
             throw new NotFoundException("Like for film with ID " + filmId + " and user with ID " + userId + " not found");
         }
         String removeLikeSql = "DELETE FROM likes " +
                 "WHERE film_id = ? " +
                 "AND user_id = ?";
-        jdbcTemplate.update(removeLikeSql, filmId, userId);
+        jdbcTemplate.update(removeLikeSql, new Object[]{filmId, userId});
         return getFilm(filmId);
     }
 
@@ -247,13 +249,11 @@ public class FilmDbStorage implements FilmStorage {
         }
         List<Film> popularFilms;
         if (count != null && count > 0) {
-            popularFilms = jdbcTemplate.query(popularFilmsSql, new Object[]{count}, this::mapRowToFilm);
+            popularFilms = jdbcTemplate.query(popularFilmsSql, this::mapRowToFilm, count);
         } else {
             popularFilms = jdbcTemplate.query(popularFilmsSql, this::mapRowToFilm);
         }
-        for (Film film : popularFilms) {
-            film.setGenres(getGenres(film.getId()));
-        }
+        popularFilms.forEach(film -> film.setGenres(getGenres(film.getId())));
         return popularFilms;
     }
 
