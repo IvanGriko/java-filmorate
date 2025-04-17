@@ -37,7 +37,6 @@ class FilmorateApplicationTests {
     @Test
     public void createUserTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -51,7 +50,6 @@ class FilmorateApplicationTests {
     @Test
     public void getUserTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -65,13 +63,11 @@ class FilmorateApplicationTests {
     @Test
     public void getUsersTest() {
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -85,7 +81,6 @@ class FilmorateApplicationTests {
     @Test
     public void updateUserTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -102,13 +97,11 @@ class FilmorateApplicationTests {
     @Test
     public void addFriendTest() {
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -123,19 +116,16 @@ class FilmorateApplicationTests {
     @Test
     public void getFriendsTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -156,19 +146,16 @@ class FilmorateApplicationTests {
     @Test
     public void removeFriendTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -189,19 +176,16 @@ class FilmorateApplicationTests {
     @Test
     public void removeAllFriendsTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -219,19 +203,16 @@ class FilmorateApplicationTests {
     @Test
     public void getCommonFriendsTest() {
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -355,7 +336,6 @@ class FilmorateApplicationTests {
                 .build();
         filmDbStorage.createFilm(film);
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -383,13 +363,11 @@ class FilmorateApplicationTests {
                 .build();
         filmDbStorage.createFilm(film);
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -421,13 +399,11 @@ class FilmorateApplicationTests {
 
         filmDbStorage.createFilm(film);
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
@@ -475,19 +451,16 @@ class FilmorateApplicationTests {
         filmDbStorage.createFilm(film1);
         filmDbStorage.createFilm(film2);
         User user = User.builder()
-                .email("user@email.com")
                 .name("User")
                 .login("login")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
-                .email("user1@email.com")
                 .name("User1")
                 .login("login1")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
-                .email("user2@email.com")
                 .name("User2")
                 .login("login2")
                 .birthday(LocalDate.of(2024, 5, 5))
