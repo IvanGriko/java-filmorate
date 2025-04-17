@@ -39,7 +39,7 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("userfbgfdg@email.com")
                 .name("User")
-                .login("login")
+                .login("loginurtyhb")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -53,7 +53,7 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("user1fvr@email.com")
                 .name("User")
-                .login("login")
+                .login("logingxfgjhg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -67,13 +67,13 @@ class FilmorateApplicationTests {
         User user1 = User.builder()
                 .email("user2fbgtry@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1kjhgxg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user3trhytt@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2ghfxfhgjh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
@@ -87,7 +87,7 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("userthrgv@email.com")
                 .name("User")
-                .login("login")
+                .login("loginukjhfdfx")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -104,13 +104,13 @@ class FilmorateApplicationTests {
         User user1 = User.builder()
                 .email("user1rtgvtrd@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1dtjh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dgrtv@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2kjhsdd")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
@@ -125,19 +125,19 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("userrgvre@email.com")
                 .name("User")
-                .login("login")
+                .login("loginthdfgx")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1fgvfredf@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1dfjh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2ver@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2gjhfdf")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -158,19 +158,19 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("userergverd@email.com")
                 .name("User")
-                .login("login")
+                .login("loginhtdhgd")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1fvrtd@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1yjhytg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2ergdfv@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2tjuyt")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -191,19 +191,19 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("usergfrvedg@email.com")
                 .name("User")
-                .login("login")
+                .login("logingfjhgdf")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1ergverdx@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1dfhb")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dfvcrgv@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2jhytfgd")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -221,19 +221,19 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("useruyjnhb@email.com")
                 .name("User")
-                .login("login")
+                .login("loginfhgtrh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1thgf@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1jhrdfg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2fghnu@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2kjhdfg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -357,7 +357,7 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("useryfgjhd@email.com")
                 .name("User")
-                .login("login")
+                .login("logindfhbgv")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
@@ -385,13 +385,13 @@ class FilmorateApplicationTests {
         User user1 = User.builder()
                 .email("user1dfgrtgjh@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1dxfgj")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dfhgyh@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2fxyhdjk")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
@@ -423,13 +423,13 @@ class FilmorateApplicationTests {
         User user1 = User.builder()
                 .email("user1dfhntyjg@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1hkjf")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dhbtfgjhb@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2hkgmv")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
@@ -477,19 +477,19 @@ class FilmorateApplicationTests {
         User user = User.builder()
                 .email("userfghfcgyg@email.com")
                 .name("User")
-                .login("login")
+                .login("loginvkhm")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1jkiukhj@email.com")
                 .name("User1")
-                .login("login1")
+                .login("login1jhkjn")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2ukiugfgc@email.com")
                 .name("User2")
-                .login("login2")
+                .login("login2hjij")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
