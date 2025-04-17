@@ -102,20 +102,22 @@ class FilmorateApplicationTests {
     public void addFriendTest() {
         User user1 = User.builder()
                 .email("user1rtgvtrd@email.com")
-                .name("User1")
+                .name("Usergnhgf")
                 .login("login1dtjh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dgrtv@email.com")
-                .name("User2")
+                .name("Userfhftgjht")
                 .login("login2kjhsdd")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        userDbStorage.addFriend(1L, 2L);
-        Assertions.assertFalse(userDbStorage.getFriends(1L).contains(userDbStorage.getUserById(2L)),
+        long userId = userDbStorage.getUserByName("Usergnhgf").getId();
+        long friendId = userDbStorage.getUserByName("Userfhftgjht").getId();
+        userDbStorage.addFriend(userId, friendId);
+        Assertions.assertTrue(userDbStorage.getFriends(userId).contains(userDbStorage.getUserById(friendId)),
                 "Friend is not added");
     }
 
