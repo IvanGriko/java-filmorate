@@ -161,31 +161,34 @@ class FilmorateApplicationTests {
     public void removeFriendTest() {
         User user = User.builder()
                 .email("userergverd@email.com")
-                .name("User")
+                .name("Userrerlkjgfj")
                 .login("loginhtdhgd")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1fvrtd@email.com")
-                .name("User1")
+                .name("User1eghtrhgrt")
                 .login("login1yjhytg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2ergdfv@email.com")
-                .name("User2")
+                .name("User2erukjhdftsee")
                 .login("login2tjuyt")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        userDbStorage.addFriend(1L, 2L);
-        userDbStorage.addFriend(1L, 3L);
+        long hasFriendsId = userDbStorage.getUserByName("Userrerlkjgfj").getId();
+        long deletedFriendId = userDbStorage.getUserByName("User1eghtrhgrt").getId();
+        long savedFriendId = userDbStorage.getUserByName("User2erukjhdftsee").getId();
+        userDbStorage.addFriend(hasFriendsId, deletedFriendId);
+        userDbStorage.addFriend(hasFriendsId, savedFriendId);
         Set<User> expectedFriends = new HashSet<>();
-        expectedFriends.add(userDbStorage.getUserById(3L));
-        userDbStorage.removeFriend(1L, 2L);
-        Set<User> actualFriends = userDbStorage.getFriends(1L);
+        expectedFriends.add(userDbStorage.getUserById(savedFriendId));
+        userDbStorage.removeFriend(hasFriendsId, deletedFriendId);
+        Set<User> actualFriends = userDbStorage.getFriends(hasFriendsId);
         Assertions.assertEquals(expectedFriends, actualFriends,
                 "Friends set is not expected");
     }
@@ -194,29 +197,32 @@ class FilmorateApplicationTests {
     public void removeAllFriendsTest() {
         User user = User.builder()
                 .email("usergfrvedg@email.com")
-                .name("User")
+                .name("Useruyguyhbnmj")
                 .login("logingfjhgdf")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1ergverdx@email.com")
-                .name("User1")
+                .name("User1xcgxfhgkhxc")
                 .login("login1dfhb")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dfvcrgv@email.com")
-                .name("User2")
+                .name("User2xfjghkgjhgxfj")
                 .login("login2jhytfgd")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        userDbStorage.addFriend(1L, 2L);
-        userDbStorage.addFriend(1L, 3L);
-        userDbStorage.removeAllFriends(1L);
-        Assertions.assertTrue(userDbStorage.getFriends(1L).isEmpty(),
+        long hasFriendsId = userDbStorage.getUserByName("Useruyguyhbnmj").getId();
+        long deletedFriend1Id = userDbStorage.getUserByName("User1xcgxfhgkhxc").getId();
+        long deletedFriend2Id = userDbStorage.getUserByName("User2xfjghkgjhgxfj").getId();
+        userDbStorage.addFriend(hasFriendsId, deletedFriend1Id);
+        userDbStorage.addFriend(hasFriendsId, deletedFriend2Id);
+        userDbStorage.removeAllFriends(hasFriendsId);
+        Assertions.assertTrue(userDbStorage.getFriends(hasFriendsId).isEmpty(),
                 "Friends set is not empty");
     }
 
@@ -224,28 +230,32 @@ class FilmorateApplicationTests {
     public void getCommonFriendsTest() {
         User user = User.builder()
                 .email("useruyjnhb@email.com")
-                .name("User")
+                .name("Userjhgsgszaa")
                 .login("loginfhgtrh")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user1 = User.builder()
                 .email("user1thgf@email.com")
-                .name("User1")
+                .name("User1ghjlkjbv")
                 .login("login1jhrdfg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2fghnu@email.com")
-                .name("User2")
+                .name("User2kjhgfsgg")
                 .login("login2kjhdfg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        userDbStorage.addFriend(1L, 2L);
-        userDbStorage.addFriend(3L, 2L);
-        Assertions.assertTrue(userDbStorage.getCommonFriends(2L, 3L).contains(userDbStorage.getUserById(2L)),
+        long hasFriend1Id = userDbStorage.getUserByName("Userjhgsgszaa").getId();
+        long friendId = userDbStorage.getUserByName("User1ghjlkjbv").getId();
+        long hasFriend2Id = userDbStorage.getUserByName("User2kjhgfsgg").getId();
+        userDbStorage.addFriend(hasFriend1Id, friendId);
+        userDbStorage.addFriend(hasFriend2Id, friendId);
+        Assertions.assertTrue(userDbStorage.getCommonFriends(hasFriend1Id, hasFriend2Id)
+                        .contains(userDbStorage.getUserById(friendId)),
                 "Set of common friends is not expected");
     }
 
