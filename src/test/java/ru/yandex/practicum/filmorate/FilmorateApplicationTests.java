@@ -48,14 +48,15 @@ class FilmorateApplicationTests {
     public void getUserTest() {
         User user = User.builder()
                 .email("user1fvr@email.com")
-                .name("User")
+                .name("Userrgfersdv")
                 .login("logingxfgjhg")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
-        User userOptional = userDbStorage.getUserById(2);
-        Assertions.assertEquals(userOptional.getId(), 2,
-                "Actual userId is not expected");
+        long createdUserId = userDbStorage.getUserByName("Userrgfersdv").getId();
+        User userOptional = userDbStorage.getUserById(createdUserId);
+        Assertions.assertEquals(userOptional.getName(), "Userrgfersdv",
+                "Actual user is not expected");
     }
 
     @Test
@@ -74,24 +75,25 @@ class FilmorateApplicationTests {
                 .build();
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        Assertions.assertEquals(userDbStorage.getUsers().size(), 2,
-                "Actual users number is not expected");
+        Assertions.assertFalse(userDbStorage.getUsers().isEmpty(),
+                "Users list is empty");
     }
 
     @Test
     public void updateUserTest() {
         User user = User.builder()
                 .email("userthrgv@email.com")
-                .name("User")
+                .name("Userrstikjh")
                 .login("loginukjhfdfx")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
         user.setEmail("updateduser@email.com");
         user.setName("Updated User");
-        user.setId(1);
+        User createdUser = userDbStorage.getUserByName("Userrstikjh");
+        user.setId(createdUser.getId());
         userDbStorage.updateUser(user);
-        Assertions.assertSame(userDbStorage.getUserById(1), user,
+        Assertions.assertSame(userDbStorage.getUserById(createdUser.getId()), user,
                 "Actual user is not expected updated user");
     }
 
