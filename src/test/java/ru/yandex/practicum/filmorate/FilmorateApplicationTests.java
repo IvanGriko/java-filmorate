@@ -93,7 +93,8 @@ class FilmorateApplicationTests {
         User createdUser = userDbStorage.getUserByName("Userrstikjh");
         user.setId(createdUser.getId());
         userDbStorage.updateUser(user);
-        Assertions.assertSame(userDbStorage.getUserById(createdUser.getId()), user,
+        createdUser = userDbStorage.getUserByName("Userrstikjh");
+        Assertions.assertSame(createdUser, user,
                 "Actual user is not expected updated user");
     }
 
