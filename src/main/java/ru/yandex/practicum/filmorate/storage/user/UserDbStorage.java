@@ -52,11 +52,22 @@ public class UserDbStorage implements UserStorage {
     }
 
     @Override
-    public User getUser(long userId) {
+    public User getUserById(long userId) {
         String sql = "SELECT * " +
                 "FROM users " +
                 "WHERE user_id = ?";
         User user = jdbcTemplate.query(sql, this::mapRowToUser, userId).stream()
+                .findFirst()
+                .orElse(null);
+        return user;
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        String sql = "SELECT * " +
+                "FROM users " +
+                "WHERE name = ?";
+        User user = jdbcTemplate.query(sql, this::mapRowToUser, name).stream()
                 .findFirst()
                 .orElse(null);
         return user;
@@ -86,15 +97,15 @@ public class UserDbStorage implements UserStorage {
                 user.getName(),
                 user.getBirthday(),
                 user.getId());
-        return getUser(user.getId());
+        return getUserById(user.getId());
     }
 
     @Override
     public Long addFriend(Long userId, Long friendId) {
-        if (getUser(userId) == null || userId == 0) {
+        if (getUserById(userId) == null || userId == 0) {
             throw new NotFoundException("User with id = " + userId + " is not found");
         }
-        if (getUser(friendId) == null || friendId == 0) {
+        if (getUserById(friendId) == null || friendId == 0) {
             throw new NotFoundException("User with id = " + friendId + " is not found");
         }
         String sql = "INSERT INTO friendship (user_id, friend_id) " +
@@ -105,7 +116,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public Set<User> getFriends(Long userId) {
-        if (getUser(userId) == null || userId == 0) {
+        if (getUserById(userId) == null || userId == 0) {
             throw new NotFoundException("User with id = " + userId + " is not found");
         }
         String sql = "SELECT friend_id " +
@@ -114,7 +125,7 @@ public class UserDbStorage implements UserStorage {
         Set<Long> friendIds = new HashSet<>(jdbcTemplate.query(sql, (rs, rowNum) -> rs.getLong("friend_id"), userId));
         Set<User> friends = new HashSet<>();
         for (Long friendId : friendIds) {
-            User friend = getUser(friendId);
+            User friend = getUserById(friendId);
             if (friend != null) {
                 friends.add(friend);
             }
@@ -124,16 +135,16 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User removeFriend(long userId, long friendId) {
-        if (getUser(userId) == null || userId == 0) {
+        if (getUserById(userId) == null || userId == 0) {
             throw new NotFoundException("User with id = " + userId + " is not found");
         }
-        if (getUser(friendId) == null || friendId == 0) {
+        if (getUserById(friendId) == null || friendId == 0) {
             throw new NotFoundException("User with id = " + friendId + " is not found");
         }
         String sql = "DELETE FROM friendship " +
                 "WHERE user_id = ? AND friend_id = ?";
         jdbcTemplate.update(sql, userId, friendId);
-        return getUser(userId);
+        return getUserById(userId);
     }
 
     @Override
@@ -141,7 +152,7 @@ public class UserDbStorage implements UserStorage {
         String sql = "DELETE FROM friendship " +
                 "WHERE user_id = ?";
         jdbcTemplate.update(sql, userId);
-        return getUser(userId);
+        return getUserById(userId);
     }
 
     @Override

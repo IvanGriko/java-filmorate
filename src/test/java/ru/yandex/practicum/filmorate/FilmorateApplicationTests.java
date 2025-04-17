@@ -34,13 +34,13 @@ class FilmorateApplicationTests {
     public void createUserTest() {
         User user = User.builder()
                 .email("userfbgfdg@email.com")
-                .name("User")
+                .name("Userdfeg")
                 .login("loginurtyhb")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
-        user.setId(1);
-        Assertions.assertSame(userDbStorage.getUser(1), user,
+        user.setId(userDbStorage.getUserByName("Userdfeg").getId());
+        Assertions.assertSame(userDbStorage.getUserByName("Userdfeg"), user,
                 "Actual user is not expected");
     }
 
@@ -53,7 +53,7 @@ class FilmorateApplicationTests {
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
-        User userOptional = userDbStorage.getUser(2);
+        User userOptional = userDbStorage.getUserById(2);
         Assertions.assertEquals(userOptional.getId(), 2,
                 "Actual userId is not expected");
     }
@@ -91,7 +91,7 @@ class FilmorateApplicationTests {
         user.setName("Updated User");
         user.setId(1);
         userDbStorage.updateUser(user);
-        Assertions.assertSame(userDbStorage.getUser(1), user,
+        Assertions.assertSame(userDbStorage.getUserById(1), user,
                 "Actual user is not expected updated user");
     }
 
@@ -112,7 +112,7 @@ class FilmorateApplicationTests {
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
         userDbStorage.addFriend(1L, 2L);
-        Assertions.assertFalse(userDbStorage.getFriends(1L).contains(userDbStorage.getUser(2L)),
+        Assertions.assertFalse(userDbStorage.getFriends(1L).contains(userDbStorage.getUserById(2L)),
                 "Friend is not added");
     }
 
@@ -142,8 +142,8 @@ class FilmorateApplicationTests {
         userDbStorage.addFriend(1L, 2L);
         userDbStorage.addFriend(1L, 3L);
         Set<User> expectedFriends = new HashSet<>();
-        expectedFriends.add(userDbStorage.getUser(2L));
-        expectedFriends.add(userDbStorage.getUser(3L));
+        expectedFriends.add(userDbStorage.getUserById(2L));
+        expectedFriends.add(userDbStorage.getUserById(3L));
         Set<User> actualFriends = userDbStorage.getFriends(1L);
         Assertions.assertEquals(expectedFriends, actualFriends,
                 "Friends set is not expected");
@@ -175,7 +175,7 @@ class FilmorateApplicationTests {
         userDbStorage.addFriend(1L, 2L);
         userDbStorage.addFriend(1L, 3L);
         Set<User> expectedFriends = new HashSet<>();
-        expectedFriends.add(userDbStorage.getUser(3L));
+        expectedFriends.add(userDbStorage.getUserById(3L));
         userDbStorage.removeFriend(1L, 2L);
         Set<User> actualFriends = userDbStorage.getFriends(1L);
         Assertions.assertEquals(expectedFriends, actualFriends,
@@ -237,7 +237,7 @@ class FilmorateApplicationTests {
         userDbStorage.createUser(user2);
         userDbStorage.addFriend(1L, 2L);
         userDbStorage.addFriend(3L, 2L);
-        Assertions.assertTrue(userDbStorage.getCommonFriends(2L, 3L).contains(userDbStorage.getUser(2L)),
+        Assertions.assertTrue(userDbStorage.getCommonFriends(2L, 3L).contains(userDbStorage.getUserById(2L)),
                 "Set of common friends is not expected");
     }
 
