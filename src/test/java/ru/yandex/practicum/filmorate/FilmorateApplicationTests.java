@@ -31,8 +31,6 @@ class FilmorateApplicationTests {
     private final FilmDbStorage filmDbStorage;
     @Autowired
     private final MpaDbStorage mpaDbStorage;
-    @Autowired
-    private final GenreStorage genreStorage;
 
     @Test
     public void createUserTest() {
@@ -57,8 +55,8 @@ class FilmorateApplicationTests {
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
-        User userOptional = userDbStorage.getUser(1);
-        Assertions.assertEquals(userOptional.getId(), 1,
+        User userOptional = userDbStorage.getUser(2);
+        Assertions.assertEquals(userOptional.getId(), 2,
                 "Actual userId is not expected");
     }
 
