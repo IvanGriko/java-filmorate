@@ -40,8 +40,8 @@ class FilmorateApplicationTests {
                 .build();
         userDbStorage.createUser(user);
         user.setId(userDbStorage.getUserByName("Userdfeg").getId());
-        Assertions.assertSame(userDbStorage.getUserByName("Userdfeg"), user,
-                "Actual user is not expected");
+        User createdUser = userDbStorage.getUserByName("Userdfeg");
+        Assertions.assertEquals(user, createdUser);
     }
 
     @Test
