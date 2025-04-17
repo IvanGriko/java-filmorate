@@ -27,8 +27,8 @@ public class UserService {
         return userDbStorage.createUser(user);
     }
 
-    public User getUser(long userId) {
-        User user = userDbStorage.getUser(userId);
+    public User getUserById(long userId) {
+        User user = userDbStorage.getUserById(userId);
         if (user == null) {
             throw new NotFoundException("User is not found");
         }

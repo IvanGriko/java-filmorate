@@ -11,7 +11,9 @@ public interface UserStorage {
 
     User createUser(User user);
 
-    User getUser(long userId);
+    User getUserById(long userId);
+
+    User getUserByName(String name);
 
     User updateUser(User user);
 
