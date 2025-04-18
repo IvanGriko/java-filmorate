@@ -349,7 +349,7 @@ class FilmorateApplicationTests {
         userDbStorage.createUser(user);
         long userId = userDbStorage.getUserByName("Useroiuytrddvbn").getId();
         filmDbStorage.addLike(filmId, userId);
-        Assertions.assertFalse(filmDbStorage.getLikes(1).isEmpty(),
+        Assertions.assertFalse(filmDbStorage.getLikes(filmId).isEmpty(),
                 "Like is not added");
     }
 
@@ -424,30 +424,30 @@ class FilmorateApplicationTests {
 
     @Test
     public void getPopularFilmsTest() {
-        Film film1 = Film.builder()
+        Film badFilm = Film.builder()
                 .name("filmgggjhjhfb")
                 .description("filmdescription")
                 .duration(100)
                 .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
-        Film film2 = Film.builder()
+        Film goodFilm = Film.builder()
                 .name("film1fhjdfdbth")
                 .description("film1description")
                 .duration(100)
                 .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
-        Film film3 = Film.builder()
+        Film bestFilm = Film.builder()
                 .name("film2jhkgvfh")
                 .description("film2description")
                 .duration(120)
                 .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
-        filmDbStorage.createFilm(film1);
-        filmDbStorage.createFilm(film2);
-        filmDbStorage.createFilm(film3);
+        filmDbStorage.createFilm(badFilm);
+        filmDbStorage.createFilm(goodFilm);
+        filmDbStorage.createFilm(bestFilm);
         User user1 = User.builder()
                 .email("userfghfcgyg@email.com")
                 .name("Userdhjkhjhdxd")
@@ -480,7 +480,7 @@ class FilmorateApplicationTests {
         filmDbStorage.addLike(film3Id, user1Id);
         filmDbStorage.addLike(film3Id, user2Id);
         filmDbStorage.addLike(film3Id, user3Id);
-        List<Film> expectedTopList = new ArrayList<>(List.of(film2, film1));
+        List<Film> expectedTopList = new ArrayList<>(List.of(bestFilm, goodFilm));
         Assertions.assertEquals(expectedTopList, filmDbStorage.getPopularFilms(2),
                 "Actual toplist is not expected");
     }
