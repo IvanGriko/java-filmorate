@@ -23,8 +23,8 @@ public class FilmService {
         return filmStorage.createFilm(film);
     }
 
-    public Film getFilm(long filmId) {
-        return filmStorage.getFilm(filmId);
+    public Film getFilmById(long filmId) {
+        return filmStorage.getFilmById(filmId);
     }
 
     public Film updateFilm(Film film) {

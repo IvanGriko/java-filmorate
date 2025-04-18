@@ -14,7 +14,9 @@ public interface FilmStorage {
 
     Film createFilm(Film film);
 
-    Film getFilm(long filmId);
+    Film getFilmById(long filmId);
+
+    Film getFilmByName(String name);
 
     Film updateFilm(Film film);
 

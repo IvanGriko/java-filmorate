@@ -107,7 +107,7 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public Film getFilm(long id) {
+    public Film getFilmById(long id) {
         String sql = "SELECT * FROM films WHERE film_id = ?";
         Film film = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             Film f = new Film();
@@ -141,6 +141,42 @@ public class FilmDbStorage implements FilmStorage {
         film.setGenres(genres);
         return film;
     }
+
+    @Override
+    public Film getFilmByName(String name) {
+        String sql = "SELECT * FROM films WHERE name = ?";
+        Film film = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            Film f = new Film();
+            f.setId(rs.getLong("film_id"));
+            f.setName(rs.getString("name"));
+            f.setDescription(rs.getString("description"));
+            f.setReleaseDate(rs.getDate("release_date").toLocalDate());
+            f.setDuration(rs.getInt("duration"));
+            Integer mpaId = rs.getObject("mpa_id", Integer.class);
+            if (mpaId != null) {
+                String ratingName = jdbcTemplate.queryForObject(
+                        "SELECT name " +
+                                "FROM mpa_ratings " +
+                                "WHERE mpa_id = ?", String.class, mpaId);
+                f.setMpa(new Mpa(mpaId, ratingName));
+            }
+            return f;
+        }, name);
+        String genreSql = "SELECT g.genre_id, g.name " +
+                "FROM genres g " +
+                "JOIN film_genres fg " +
+                "ON g.genre_id = fg.genre_id " +
+                "WHERE fg.film_id = ?";
+        List<Genre> genres = jdbcTemplate.query(genreSql, (rs, rowNum) -> {
+            Genre genre = new Genre();
+            genre.setId(rs.getInt("genre_id"));
+            genre.setName(rs.getString("name"));
+            return genre;
+        }, film.getId());
+        film.setGenres(genres);
+        return film;
+    }
+
 
     @Override
     public Film updateFilm(Film film) {
@@ -211,7 +247,7 @@ public class FilmDbStorage implements FilmStorage {
         String addLikeSql = "INSERT INTO likes (film_id, user_id) " +
                 "VALUES (?, ?)";
         jdbcTemplate.update(addLikeSql, filmId, userId);
-        return getFilm(filmId);
+        return getFilmById(filmId);
     }
 
     @Override
@@ -231,7 +267,7 @@ public class FilmDbStorage implements FilmStorage {
                 "WHERE film_id = ? " +
                 "AND user_id = ?";
         jdbcTemplate.update(removeLikeSql, new Object[]{filmId, userId});
-        return getFilm(filmId);
+        return getFilmById(filmId);
     }
 
     @Override

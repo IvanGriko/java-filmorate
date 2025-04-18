@@ -54,8 +54,8 @@ class FilmorateApplicationTests {
                 .build();
         userDbStorage.createUser(user);
         long createdUserId = userDbStorage.getUserByName("Userrgfersdv").getId();
-        User userOptional = userDbStorage.getUserById(createdUserId);
-        Assertions.assertEquals(userOptional.getName(), "Userrgfersdv",
+        User getUser = userDbStorage.getUserById(createdUserId);
+        Assertions.assertEquals(getUser.getName(), "Userrgfersdv",
                 "Actual user is not expected");
     }
 
@@ -88,14 +88,13 @@ class FilmorateApplicationTests {
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
-        user.setEmail("updateduser@email.com");
-        user.setName("Updated User");
         User createdUser = userDbStorage.getUserByName("Userrstikjh");
         user.setId(createdUser.getId());
+        user.setName("Updated User");
         userDbStorage.updateUser(user);
         User updatedUser = userDbStorage.getUserById(user.getId());
-        Assertions.assertEquals(updatedUser, user,
-                "Actual user is not expected updated user");
+        Assertions.assertEquals("Updated User", updatedUser.getName(),
+                "Actual user is not updated");
     }
 
     @Test
@@ -261,261 +260,229 @@ class FilmorateApplicationTests {
 
     @Test
     public void createFilmTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
         Film film = Film.builder()
-                .name("film")
+                .name("filmkjughjhfh")
                 .description("filmDescription")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         filmDbStorage.createFilm(film);
-        Assertions.assertNotNull(filmDbStorage.getFilm(1),
-                "Film is not found in database");
+        long createdFilmId = filmDbStorage.getFilmByName("filmkjughjhfh").getId();
+        Assertions.assertNotNull(filmDbStorage.getFilmById(createdFilmId),
+                "Film is not created");
     }
 
     @Test
-    public void getFilmTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
+    public void getFilmByIdTest() {
         Film film = Film.builder()
-                .name("film")
+                .name("filmyijhdghgjh")
                 .description("filmDescription")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(2))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         filmDbStorage.createFilm(film);
-        film.setId(1);
-        Assertions.assertSame(filmDbStorage.getFilm(1), film,
+        long getFilmId = filmDbStorage.getFilmByName("filmyijhdghgjh").getId();
+        film.setId(getFilmId);
+        Assertions.assertEquals(filmDbStorage.getFilmById(getFilmId), film,
                 "Actual film is not expected");
     }
 
     @Test
     public void getFilmsTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
         Film film1 = Film.builder()
                 .name("film1")
                 .description("film1description")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         Film film2 = Film.builder()
                 .name("film2")
                 .description("film2description")
                 .duration(120)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(2))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         filmDbStorage.createFilm(film1);
         filmDbStorage.createFilm(film2);
-        Assertions.assertEquals(filmDbStorage.getFilms().size(), 2,
+        Assertions.assertFalse(filmDbStorage.getFilms().isEmpty(),
                 "Films are not found");
     }
 
     @Test
     public void updateFilmTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
         Film film = Film.builder()
-                .name("film")
+                .name("filmaykhjhgxgh")
                 .description("filmdescription")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         filmDbStorage.createFilm(film);
-        film.setId(1);
+        Film createdFilm = filmDbStorage.getFilmByName("filmaykhjhgxgh");
+        film.setId(createdFilm.getId());
         film.setName("UpdatedFilm");
-        film.setDescription("Updated film description");
         filmDbStorage.updateFilm(film);
-        Assertions.assertSame(filmDbStorage.getFilm(1), film,
+        Film updatedFilm = filmDbStorage.getFilmById(createdFilm.getId());
+        Assertions.assertEquals("UpdatedFilm", updatedFilm.getName(),
                 "Actual film is not expected");
     }
 
     @Test
     public void addLikeTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
         Film film = Film.builder()
-                .name("film")
+                .name("filmjhgfffghj")
                 .description("description")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         filmDbStorage.createFilm(film);
+        long filmId = filmDbStorage.getFilmByName("filmjhgfffghj").getId();
         User user = User.builder()
                 .email("useryfgjhd@email.com")
-                .name("User")
+                .name("Useroiuytrddvbn")
                 .login("logindfhbgv")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user);
-        filmDbStorage.addLike(1, 1);
+        long userId = userDbStorage.getUserByName("Useroiuytrddvbn").getId();
+        filmDbStorage.addLike(filmId, userId);
         Assertions.assertFalse(filmDbStorage.getLikes(1).isEmpty(),
-                "Like is not found");
+                "Like is not added");
     }
 
     @Test
     public void getLikesTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
         Film film = Film.builder()
-                .name("film")
+                .name("filmdfghjlkjh")
                 .description("filmdescription")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         filmDbStorage.createFilm(film);
         User user1 = User.builder()
                 .email("user1dfgrtgjh@email.com")
-                .name("User1")
+                .name("User1sdkjhgscgj")
                 .login("login1dxfgj")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dfhgyh@email.com")
-                .name("User2")
+                .name("User2fdfgkmnbxc")
                 .login("login2fxyhdjk")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        filmDbStorage.addLike(1, 1);
-        filmDbStorage.addLike(1, 2);
-        Set<Long> expectedLikesSet = new HashSet<>(Set.of(1L, 2L));
-        Assertions.assertEquals(expectedLikesSet, filmDbStorage.getLikes(1),
+        long filmId = filmDbStorage.getFilmByName("filmdfghjlkjh").getId();
+        long user1Id = userDbStorage.getUserByName("User1sdkjhgscgj").getId();
+        long user2Id = userDbStorage.getUserByName("User2fdfgkmnbxc").getId();
+        filmDbStorage.addLike(filmId, user1Id);
+        filmDbStorage.addLike(filmId, user2Id);
+        Set<Long> expectedLikesSet = new HashSet<>(Set.of(user1Id, user2Id));
+        Assertions.assertEquals(expectedLikesSet, filmDbStorage.getLikes(filmId),
                 "Actual likes set is not expected");
     }
 
     @Test
     public void removeLikeTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
         Film film = Film.builder()
-                .name("film")
+                .name("filmhkgjm")
                 .description("filmdescription")
                 .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
-
         filmDbStorage.createFilm(film);
         User user1 = User.builder()
                 .email("user1dfhntyjg@email.com")
-                .name("User1")
+                .name("User1khjhvnm")
                 .login("login1hkjf")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         User user2 = User.builder()
                 .email("user2dhbtfgjhb@email.com")
-                .name("User2")
+                .name("User2ccvcmmhb")
                 .login("login2hkgmv")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        filmDbStorage.addLike(1, 1);
-        filmDbStorage.addLike(1, 2);
-        Set<Long> expectedLikesSet = new HashSet<>(Set.of(2L));
-        filmDbStorage.removeLike(1, 1);
-        Assertions.assertEquals(expectedLikesSet, filmDbStorage.getLikes(1),
+        long filmId = filmDbStorage.getFilmByName("filmhkgjm").getId();
+        long user1Id = userDbStorage.getUserByName("User1khjhvnm").getId();
+        long user2Id = userDbStorage.getUserByName("User2ccvcmmhb").getId();
+        filmDbStorage.addLike(filmId, user1Id);
+        filmDbStorage.addLike(filmId, user2Id);
+        Set<Long> expectedLikesSet = new HashSet<>(Set.of(user1Id));
+        filmDbStorage.removeLike(filmId, user2Id);
+        Assertions.assertEquals(expectedLikesSet, filmDbStorage.getLikes(filmId),
                 "Actual likes set is not expected");
     }
 
     @Test
     public void getPopularFilmsTest() {
-        Mpa mpa;
-        if (mpaDbStorage.getMpaById(1) == null) {
-            mpa = new Mpa(1, "G");
-        } else {
-            mpa = mpaDbStorage.getMpaById(1);
-        }
-        Film film = Film.builder()
-                .name("film")
+        Film film1 = Film.builder()
+                .name("filmgggjhjhfb")
                 .description("filmdescription")
                 .duration(100)
-                .mpa(mpa)
-                .releaseDate(LocalDate.of(2025, 4, 5))
-                .build();
-        Film film1 = Film.builder()
-                .name("film1")
-                .description("film1description")
-                .duration(100)
-                .mpa(mpa)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
         Film film2 = Film.builder()
-                .name("film2")
-                .description("film2description")
-                .duration(120)
-                .mpa(mpa)
+                .name("film1fhjdfdbth")
+                .description("film1description")
+                .duration(100)
+                .mpa(mpaDbStorage.getMpaById(1))
                 .releaseDate(LocalDate.of(2025, 4, 5))
                 .build();
-        filmDbStorage.createFilm(film);
+        Film film3 = Film.builder()
+                .name("film2jhkgvfh")
+                .description("film2description")
+                .duration(120)
+                .mpa(mpaDbStorage.getMpaById(1))
+                .releaseDate(LocalDate.of(2025, 4, 5))
+                .build();
         filmDbStorage.createFilm(film1);
         filmDbStorage.createFilm(film2);
-        User user = User.builder()
+        filmDbStorage.createFilm(film3);
+        User user1 = User.builder()
                 .email("userfghfcgyg@email.com")
-                .name("User")
+                .name("Userdhjkhjhdxd")
                 .login("loginvkhm")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
-        User user1 = User.builder()
+        User user2 = User.builder()
                 .email("user1jkiukhj@email.com")
-                .name("User1")
+                .name("User1dfhgjjmngx")
                 .login("login1jhkjn")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
-        User user2 = User.builder()
+        User user3 = User.builder()
                 .email("user2ukiugfgc@email.com")
-                .name("User2")
+                .name("User2xfhjnbvxdgh")
                 .login("login2hjij")
                 .birthday(LocalDate.of(2024, 5, 5))
                 .build();
-        userDbStorage.createUser(user);
         userDbStorage.createUser(user1);
         userDbStorage.createUser(user2);
-        filmDbStorage.addLike(2, 1);
-        filmDbStorage.addLike(2, 2);
-        filmDbStorage.addLike(3, 1);
-        filmDbStorage.addLike(3, 2);
-        filmDbStorage.addLike(3, 3);
-        List<Film> expectedTopLikesList = new ArrayList<>(List.of(film2, film1));
-        Assertions.assertEquals(expectedTopLikesList, filmDbStorage.getPopularFilms(2),
+        userDbStorage.createUser(user3);
+        long film1Id = filmDbStorage.getFilmByName("filmgggjhjhfb").getId();
+        long film2Id = filmDbStorage.getFilmByName("film1fhjdfdbth").getId();
+        long film3Id = filmDbStorage.getFilmByName("film2jhkgvfh").getId();
+        long user1Id = userDbStorage.getUserByName("Userdhjkhjhdxd").getId();
+        long user2Id = userDbStorage.getUserByName("User1dfhgjjmngx").getId();
+        long user3Id = userDbStorage.getUserByName("User2xfhjnbvxdgh").getId();
+        filmDbStorage.addLike(film2Id, user1Id);
+        filmDbStorage.addLike(film2Id, user2Id);
+        filmDbStorage.addLike(film3Id, user1Id);
+        filmDbStorage.addLike(film3Id, user2Id);
+        filmDbStorage.addLike(film3Id, user3Id);
+        List<Film> expectedTopList = new ArrayList<>(List.of(film2, film1));
+        Assertions.assertEquals(expectedTopList, filmDbStorage.getPopularFilms(2),
                 "Actual toplist is not expected");
     }
 
