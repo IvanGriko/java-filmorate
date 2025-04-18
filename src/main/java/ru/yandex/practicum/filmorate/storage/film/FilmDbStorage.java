@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @Primary
@@ -56,20 +57,18 @@ public class FilmDbStorage implements FilmStorage {
             Genre genre = new Genre();
             genre.setId(rs.getInt("genre_id"));
             genre.setName(rs.getString("genre_name"));
-            if (!film.getGenres().contains(genre)) {
-                film.getGenres().add(genre);
-            }
+            film.getGenres().add(genre);
             return film;
         });
     }
 
     @Override
     public Film createFilm(Film film) {
-        if (!mpaDbStorage.getAllMpa().contains(film.getMpa())) {
+        if (mpaDbStorage.getMpaById(film.getMpa().getId()) == null) {
             throw new NotFoundException("MPA is not found");
         }
         for (Genre genre : film.getGenres()) {
-            if (!genreDbStorage.getAllGenres().contains(genre)) {
+            if (genreDbStorage.getGenreById(genre.getId()) == null) {
                 throw new NotFoundException("Genre is not found");
             }
         }
@@ -131,12 +130,12 @@ public class FilmDbStorage implements FilmStorage {
                 "JOIN film_genres fg " +
                 "ON g.genre_id = fg.genre_id " +
                 "WHERE fg.film_id = ?";
-        List<Genre> genres = jdbcTemplate.query(genreSql, (rs, rowNum) -> {
+        Set<Genre> genres = new HashSet<>(jdbcTemplate.query(genreSql, (rs, rowNum) -> {
             Genre genre = new Genre();
             genre.setId(rs.getInt("genre_id"));
             genre.setName(rs.getString("name"));
             return genre;
-        }, id);
+        }, id));
         assert film != null;
         film.setGenres(genres);
         return film;
@@ -167,12 +166,12 @@ public class FilmDbStorage implements FilmStorage {
                 "JOIN film_genres fg " +
                 "ON g.genre_id = fg.genre_id " +
                 "WHERE fg.film_id = ?";
-        List<Genre> genres = jdbcTemplate.query(genreSql, (rs, rowNum) -> {
+        Set<Genre> genres = new HashSet<>(jdbcTemplate.query(genreSql, (rs, rowNum) -> {
             Genre genre = new Genre();
             genre.setId(rs.getInt("genre_id"));
             genre.setName(rs.getString("name"));
             return genre;
-        }, film.getId());
+        }, film.getId()));
         film.setGenres(genres);
         return film;
     }
@@ -288,7 +287,7 @@ public class FilmDbStorage implements FilmStorage {
         } else {
             popularFilms = jdbcTemplate.query(popularFilmsSql, this::mapRowToFilm);
         }
-        popularFilms.forEach(film -> film.setGenres(getGenres(film.getId())));
+        popularFilms.forEach(film -> film.setGenres(new HashSet<>(getGenres(film.getId()))));
         return popularFilms;
     }
 

@@ -30,7 +30,7 @@ public class Film {
     @Positive(message = "Продолжительность фильма не может быть меньше 0")
     private Integer duration;
     @Builder.Default
-    private List<Genre> genres = new ArrayList<>();
+    private Set<Genre> genres = new HashSet<>();
     private Mpa mpa;
 
     public List<Genre> getGenres() {
