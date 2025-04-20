@@ -4,15 +4,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -30,10 +26,13 @@ public class User {
     private String name;
     @Past
     private LocalDate birthday;
-    public Set<Long> friends;
 
-    public void addFriend(long friendId) {
-        friends.add(friendId);
+    public User(Long id, String email, String login, LocalDate birthday, String name) {
+        this.id = id;
+        this.email = email;
+        this.login = login;
+        this.birthday = birthday;
+        this.name = name;
     }
 
     @Override
@@ -48,4 +47,5 @@ public class User {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

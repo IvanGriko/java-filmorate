@@ -5,6 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 
 public class AfterDateValidation implements ConstraintValidator<AfterDate, LocalDate> {
+
     private LocalDate minimumDate;
 
     @Override
@@ -16,4 +17,5 @@ public class AfterDateValidation implements ConstraintValidator<AfterDate, Local
     public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
         return value == null || !value.isBefore(minimumDate);
     }
+
 }

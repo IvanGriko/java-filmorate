@@ -1,8 +1,9 @@
 package ru.yandex.practicum.filmorate.storage.film;
 
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -13,15 +14,20 @@ public interface FilmStorage {
 
     Film createFilm(Film film);
 
-    Film getFilm(long filmId) throws NotFoundException;
+    Film getFilmById(long filmId);
 
-    Film updateFilm(Film film) throws NotFoundException;
+    Film getFilmByName(String name);
 
-    Set<Long> getLikes(long filmId) throws NotFoundException;
+    Film updateFilm(Film film);
 
-    Film addLike(long filmId, long userId) throws NotFoundException;
+    Film mapRowToFilm(ResultSet rs, int rowNum) throws SQLException;
 
-    Film removeLike(long filmId, long userId) throws NotFoundException;
+    Set<Long> getLikes(long filmId);
+
+    Film addLike(long filmId, long userId);
+
+    Film removeLike(long filmId, long userId);
 
     List<Film> getPopularFilms(Integer count);
+
 }

@@ -11,17 +11,22 @@ public interface UserStorage {
 
     User createUser(User user);
 
-    User getUser(long userId);
+    User getUserById(long userId);
+
+    User getUserByName(String name);
 
     User updateUser(User user);
 
-    User addFriend(long userId, long friendId);
+    Long addFriend(Long userId, Long friendId);
 
-    Set<User> getFriends(long userId);
+    Set<User> getFriends(Long userId);
 
     User removeFriend(long userId, long friendId);
 
     User removeAllFriends(long userId);
 
     Set<User> getCommonFriends(long user1Id, long user2Id);
+
+    boolean friendshipVerification(long user1Id, long user2Id);
+
 }

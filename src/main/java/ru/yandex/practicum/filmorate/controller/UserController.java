@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
@@ -31,19 +30,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable long id) {
-        return userService.getUser(id);
+    public User getUserById(@PathVariable long id) {
+        return userService.getUserById(id);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(NotFoundException.class)
     public User updateUser(@Valid @RequestBody User user) {
         return userService.updateUser(user);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public User addFriend(@PathVariable long id, @PathVariable long friendId) {
+    public Long addFriend(@PathVariable Long id, @PathVariable Long friendId) {
         return userService.addFriend(id, friendId);
     }
 
@@ -66,4 +64,10 @@ public class UserController {
     public Set<User> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
         return userService.getCommonFriends(id, otherId);
     }
+
+    @GetMapping("/{id}/friends/{otherId}")
+    public boolean friendshipVerification(long id, long otherId) {
+        return userService.friendshipVerification(id, otherId);
+    }
+
 }
